@@ -1,0 +1,15 @@
+file_input:
+  simple_stmt: a=1
+    expr_stmt: a=1
+      atom: a
+      atom: 1
+  simple_stmt: a=b=2
+    expr_stmt: a=b=2
+      atom: a
+      atom: b
+      atom: 2
+  simple_stmt: print(a)
+    atom_expr: print(a)
+      atom: print
+      trailer: (a)
+        atom: a
