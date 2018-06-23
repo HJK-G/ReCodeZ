@@ -3,7 +3,7 @@ import os
 
 
 filePath="/sample-errors/e9-pair-parentheses/"
-fileName="sample5.py"
+fileName="sample4.py"
 
 def getListOfLinesFromFile():
     file=getFileFromFilePath()
