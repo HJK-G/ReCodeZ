@@ -31,6 +31,7 @@ public class ParserPython extends ParserCheckers
 		BufferedReader resultReader = getReadableResults(resultsFromCheck);
 		ParserPythonError errorChecked = new ParserPythonError(resultReader);
 
+		System.out.println(errorChecked.isError);
 		return errorChecked.isError;
 	}
 

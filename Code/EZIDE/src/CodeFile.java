@@ -1,11 +1,8 @@
 
-
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
+import java.util.ArrayList;
 
 public class CodeFile
 {
@@ -18,23 +15,25 @@ public class CodeFile
 
 	private static String[] readLinesFromFile(String filePath)
 	{
-		return readFile(filePath).split("\n");
-	}
-
-	private static String readFile(String filePath)
-	{
 		try
 		{
 			BufferedReader f = new BufferedReader(new FileReader(filePath));
-			File file = new File(filePath);
-			Charset encoding = Charset.forName("UTF-8");
-			byte[] encoded = Files.readAllBytes(file.toPath());
-			return new String(encoded, encoding);
+			ArrayList<String> lines = new ArrayList<String>();
+			while (f.ready())
+				lines.add(f.readLine());
+			f.close();
+
+			String[] linesFromFile = new String[lines.size()];
+			for (int i = 0; i < lines.size(); i++)
+				linesFromFile[i] = lines.get(i);
+
+			return linesFromFile;
 		}
 		catch (IOException e)
 		{
-			return "";
+			e.printStackTrace();
 		}
+		return new String[] {};
 	}
 
 	public String[] getLinesOfFile()
