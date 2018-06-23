@@ -40,6 +40,7 @@ public class ParserPython extends ParserCheckers
 		String command = "/Users/JustinKim/anaconda3/bin/python /Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/CheckForSyntaxError.py";
 		try
 		{
+			line = line.replace("\n", "");
 			line = "\"" + line + "\"";
 			return Runtime.getRuntime().exec(command + " " + line);
 		}

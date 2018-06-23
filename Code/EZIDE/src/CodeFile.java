@@ -25,7 +25,10 @@ public class CodeFile
 
 			String[] linesFromFile = new String[lines.size()];
 			for (int i = 0; i < lines.size(); i++)
+			{
+				System.out.println(lines.get(i));
 				linesFromFile[i] = lines.get(i);
+			}
 
 			return linesFromFile;
 		}

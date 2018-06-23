@@ -13,7 +13,14 @@ public class ParserPythonError
 	{
 		try
 		{
-			if (results.read()=='0')
+			String line=results.readLine();
+			while(line!=null)
+			{
+				System.out.println(line);
+				line=results.readLine();
+			}
+			results.readLine();
+			if (results.readLine().equals("0"))
 				isError = false;
 			else
 			{
