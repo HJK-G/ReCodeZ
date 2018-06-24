@@ -6,41 +6,41 @@ import java.util.ArrayList;
 
 public class CodeFile
 {
-	private String[] linesOfFile;
+	private ArrayList<LineOfCode> linesOfFile;
+	private String filePath;
 
 	public CodeFile(String filePath)
 	{
 		linesOfFile = readLinesFromFile(filePath);
+		this.filePath = filePath;
 	}
 
-	private static String[] readLinesFromFile(String filePath)
+	private static ArrayList<LineOfCode> readLinesFromFile(String filePath)
 	{
 		try
 		{
 			BufferedReader f = new BufferedReader(new FileReader(filePath));
-			ArrayList<String> lines = new ArrayList<String>();
+			ArrayList<LineOfCode> lines = new ArrayList<>();
 			while (f.ready())
-				lines.add(f.readLine());
+				lines.add(new LineOfCode(f.readLine().trim(), lines.size()));
 			f.close();
 
-			String[] linesFromFile = new String[lines.size()];
-			for (int i = 0; i < lines.size(); i++)
-			{
-				System.out.println(lines.get(i));
-				linesFromFile[i] = lines.get(i);
-			}
-
-			return linesFromFile;
+			return lines;
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		return new String[] {};
+		return new ArrayList<>();
 	}
 
-	public String[] getLinesOfFile()
+	public ArrayList<LineOfCode> getLinesOfFile()
 	{
 		return linesOfFile;
+	}
+	
+	public String getFilePath()
+	{
+		return filePath;
 	}
 }

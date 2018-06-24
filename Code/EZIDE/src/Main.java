@@ -3,7 +3,7 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		ParserPython p = new ParserPython("Testing/sample2.py");
-		p.correctFile();
+		PythonHandler p = new PythonHandler("./documents/workspace/ezide/upgraded-waffle/code/ezide/Testing/sample2.py");
+		p.checkCode();
 	}
 }

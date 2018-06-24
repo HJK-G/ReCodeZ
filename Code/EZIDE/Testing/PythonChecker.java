@@ -2,47 +2,44 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ParserPython extends ParserCheckers
+public class PythonChecker extends CodeValidityChecker
 {
-	public ParserPython(String filePath)
+	public PythonChecker(String filePath)
 	{
 		file = new CodeFile(filePath);
 	}
 
 	@Override
-	void correctFile()
+	void checkFile()
 	{
-		for (String line : file.getLinesOfFile())
+		for (int i = 0; i < file.getLinesOfFile().size(); i++)
 		{
-			correctLine(line);
+			checkLine(i);
 		}
 	}
 
-	private void correctLine(String line)
+	private void checkLine(int lineNumber)
 	{
-		if (hasErrors(line))
-			displayCorrectionMessage(line);
+		if (hasErrors(lineNumber))
+			displayCorrectionMessage(lineNumber);
 	}
 
 	@Override
-	protected boolean hasErrors(String line)
+	protected boolean hasErrors(int lineNumber)
 	{
-		Process resultsFromCheck = checkSyntaxForErrors(line);
-		BufferedReader resultReader = getReadableResults(resultsFromCheck);
-		ParserPythonError errorChecked = new ParserPythonError(resultReader);
-
-		System.out.println(errorChecked.isError);
-		return errorChecked.isError;
+		
 	}
 
 	private Process checkSyntaxForErrors(String line)
 	{
-		String command = "/Users/JustinKim/anaconda3/bin/python /Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/CheckForSyntaxError.py";
+		String command = "python /Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/CheckForSyntaxError1.py ";
 		try
 		{
+			int lineno = 0;
 			line = line.replace("\n", "");
-			line = "\"" + line + "\"";
-			return Runtime.getRuntime().exec(command + " " + line);
+			return Runtime.getRuntime().exec(command
+					+ "/Users/JustinKim/documents/workspace/ezide/upgraded-waffle/code/ezide/testing/sample2.py "
+					+ lineno);
 		}
 		catch (IOException e)
 		{
@@ -57,7 +54,7 @@ public class ParserPython extends ParserCheckers
 	}
 
 	@Override
-	protected void displayCorrectionMessage(String line)
+	protected void displayCorrectionMessage(int lineNumber)
 	{
 		String message = getDefaultCorrectionMessage(line);
 		message += findCorrectLine(line);
@@ -75,7 +72,7 @@ public class ParserPython extends ParserCheckers
 	}
 
 	@Override
-	protected String findCorrectLine(String line)
+	protected String getCorrectLine(int lineNumber)
 	{
 		// bad algorithm
 		String correctStatement = "";
