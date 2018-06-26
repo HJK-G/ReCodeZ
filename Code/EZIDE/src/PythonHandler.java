@@ -12,7 +12,7 @@ public class PythonHandler extends CodeHandler
 	{
 		for (LineOfCode line : file.getLinesOfFile())
 		{
-			Error error = errorChecker.getError(line.getLineNumber());
+			CodeError error = errorChecker.getError(line.getLineNumber());
 			if (error.getLine().getLineNumber() != -1)
 				errorHandler.handleError(error);
 		}

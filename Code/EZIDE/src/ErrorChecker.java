@@ -3,5 +3,5 @@ public abstract class ErrorChecker
 {
 	protected CodeFile file;
 
-	public abstract Error getError(int lineNumber);
+	public abstract CodeError getError(int lineNumber);
 }

@@ -1,9 +1,8 @@
 
 public class PythonErrorHandler extends ErrorHandler
 {
-
 	@Override
-	public void handleError(Error error)
+	public void handleError(CodeError error)
 	{
 		
 	}

@@ -9,11 +9,11 @@ public class PythonErrorChecker extends ErrorChecker
 	}
 
 	@Override
-	public Error getError(int lineNumber)
+	public CodeError getError(int lineNumber)
 	{
 		Process results = runPythonCheckForSyntax(lineNumber);
 		Scanner errorReader = new Scanner(results.getInputStream());
-		Error error = getErrorFromReader(errorReader);
+		CodeError error = getErrorFromReader(errorReader);
 
 		errorReader.close();
 		return error;
@@ -33,17 +33,17 @@ public class PythonErrorChecker extends ErrorChecker
 		return null;
 	}
 
-	private Error getErrorFromReader(Scanner errorReader)
+	private CodeError getErrorFromReader(Scanner errorReader)
 	{
 		String isError = errorReader.next();
 		if (isError.equals("0"))
-			return new Error("Good Statement", -1, -1, "Not Error");
+			return new CodeError("Good Statement", -1, -1, "Not Error");
 
 		String errorMessage = errorReader.nextLine();
 		String text = errorReader.nextLine();
 		int lineNumber = Integer.parseInt(errorReader.next());
 		int characterNumber = Integer.parseInt(errorReader.next());
 
-		return new Error(text, lineNumber, characterNumber, errorMessage);
+		return new CodeError(text, lineNumber, characterNumber, errorMessage);
 	}
 }

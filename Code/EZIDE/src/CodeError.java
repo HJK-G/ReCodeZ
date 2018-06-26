@@ -1,11 +1,11 @@
 
-public class Error
+public class CodeError
 {
 	private LineOfCode line;
 	private int characterNumber;
 	private String errorMessage;
 
-	public Error(String line, int lineNumber, int characterNumber, String errorMessage)
+	public CodeError(String line, int lineNumber, int characterNumber, String errorMessage)
 	{
 		this.line = new LineOfCode(line, lineNumber);
 		this.characterNumber = characterNumber;

@@ -19,7 +19,7 @@ def changeDirectoryToFilePath():
     os.chdir(newPath)
 
 
-    
+first=SyntaxError()
 def main():
     linesInFile=getListOfLinesFromFile()
     
@@ -32,6 +32,8 @@ def main():
         except SyntaxError as se:
             first=se
             print(st)
+            print(se.msg)
             break
         
 main()
+print(first.msg)

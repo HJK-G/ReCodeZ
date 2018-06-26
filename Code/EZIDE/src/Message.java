@@ -1,7 +1,15 @@
 
-public abstract class Message
+public class Message
 {
-	String messageTemplate;
+	private String message;
 
-	public abstract void displayMessage();
+	public Message(String message)
+	{
+		this.message = message;
+	}
+
+	public void displayMessage()
+	{
+		System.out.println(message);
+	}
 }
