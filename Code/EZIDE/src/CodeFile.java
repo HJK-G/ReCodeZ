@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class CodeFile
+public final class CodeFile
 {
 	private ArrayList<LineOfCode> linesOfFile;
 	private String filePath;
@@ -21,6 +21,7 @@ public class CodeFile
 		{
 			BufferedReader f = new BufferedReader(new FileReader(filePath));
 			ArrayList<LineOfCode> lines = new ArrayList<>();
+			
 			while (f.ready())
 				lines.add(new LineOfCode(f.readLine().trim(), lines.size()));
 			f.close();

@@ -1,4 +1,3 @@
-
 public abstract class ErrorRule
 {
 	public abstract boolean isThisErrorRule(CodeError error);

@@ -1,29 +1,35 @@
-
-public class PythonParenthesesErrorRule extends PythonErrorRule
+public final class PythonParenthesesErrorRule extends ErrorRule
 {
 	@Override
 	public boolean isThisErrorRule(CodeError error)
 	{
-		boolean canHaveAnotherToken = true;
-		String code = error.getLine().getLine();
-
 		if (matchesSyntaxError(error))
 		{
-			for (int i = 0; i < code.length(); i++)
+			boolean hasSeparator = true;
+
+			for (String tokenOrSeparator : error.getSeparatedTokensAndSeparators())
 			{
-				
+				System.out.println(tokenOrSeparator);
+				if (PythonSpecificTerms.isToken(tokenOrSeparator))
+					if (hasSeparator)
+						hasSeparator = false;
+					else
+						return true;
+				else
+					hasSeparator = true;
 			}
 		}
-		
+
 		return false;
 	}
 
 	private boolean matchesSyntaxError(CodeError error)
 	{
-		if (error.getErrorMessage().equals("SyntaxError: unexpected EOF while parsing"))
+		if (error.getErrorMessage().equals("invalid syntax"))
 			return true;
-		if (error.getErrorMessage().equals("SyntaxError: invalid syntax"))
+		if (error.getErrorMessage().equals("unexpected EOF while parsing"))
 			return true;
+
 		return false;
 
 	}

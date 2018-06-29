@@ -1,10 +1,12 @@
-public class PythonHandler extends CodeHandler
+public final class PythonHandler extends CodeHandler
 {
 	public PythonHandler(String filePath)
 	{
 		file = new CodeFile(filePath);
 		errorChecker = new PythonErrorChecker(file);
 		errorHandler = new PythonErrorHandler();
+
+		PythonSpecificTerms.setAllTerms();
 	}
 
 	@Override

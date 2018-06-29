@@ -1,5 +1,4 @@
-
-public class LineOfCode
+public final class LineOfCode
 {
 	private String line;
 	private int lineNumber;

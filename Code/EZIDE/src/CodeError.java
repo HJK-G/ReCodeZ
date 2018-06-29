@@ -1,15 +1,19 @@
+import java.util.ArrayList;
 
-public class CodeError
+public final class CodeError
 {
 	private LineOfCode line;
 	private int characterNumber;
 	private String errorMessage;
+	private ArrayList<String> separatedTokensAndSeparators;
 
-	public CodeError(String line, int lineNumber, int characterNumber, String errorMessage)
+	public CodeError(String line, int lineNumber, int characterNumber, String errorMessage,
+			ArrayList<String> separatedTokensAndSeparators)
 	{
 		this.line = new LineOfCode(line, lineNumber);
 		this.characterNumber = characterNumber;
 		this.errorMessage = errorMessage;
+		this.separatedTokensAndSeparators = separatedTokensAndSeparators;
 	}
 
 	public LineOfCode getLine()
@@ -25,5 +29,10 @@ public class CodeError
 	public String getErrorMessage()
 	{
 		return errorMessage;
+	}
+
+	public ArrayList<String> getSeparatedTokensAndSeparators()
+	{
+		return separatedTokensAndSeparators;
 	}
 }

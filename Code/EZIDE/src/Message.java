@@ -1,5 +1,5 @@
 
-public class Message
+public final class Message
 {
 	private String message;
 
