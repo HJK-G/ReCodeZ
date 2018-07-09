@@ -1,17 +1,17 @@
 public final class LineOfCode
 {
-	private String line;
+	private String text;
 	private int lineNumber;
 
-	public LineOfCode(String line, int lineNumber)
+	public LineOfCode(String text, int lineNumber)
 	{
-		this.line = line;
+		this.text = text;
 		this.lineNumber = lineNumber;
 	}
 
-	public String getLine()
+	public String getText()
 	{
-		return line;
+		return text;
 	}
 
 	public int getLineNumber()

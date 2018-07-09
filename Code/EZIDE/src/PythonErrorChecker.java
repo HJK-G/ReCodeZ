@@ -53,7 +53,30 @@ public final class PythonErrorChecker extends ErrorChecker
 	private ArrayList<String> separateIntoTokensAndSeparators(String text)
 	{
 		ArrayList<String> separated = new ArrayList<>();
-		
+		String prevString = "";
+		boolean inToken = false;
+		for (int i = 0; i < text.length(); i++)
+		{
+			if (PythonSpecificTerms.getTokenPossibleCharacters().contains((int) text.charAt(i)))
+			{
+				
+			}
+			else
+			{
+
+			}
+		}
+
+		separated.add("print");
+		separated.add(" (");
+		separated.add("3");
+		separated.add(" + ");
+		separated.add("9");
+		separated.add(" * (");
+		separated.add("4");
+		separated.add(" + ");
+		separated.add("5");
+		separated.add(")");
 
 		return separated;
 	}

@@ -5,19 +5,23 @@ public final class PythonParenthesesErrorRule extends ErrorRule
 	{
 		if (matchesSyntaxError(error))
 		{
-			boolean hasSeparator = true;
+			int unpairedLeftParentheses = 0;
 
-			for (String tokenOrSeparator : error.getSeparatedTokensAndSeparators())
+			String text = error.getLine().getText();
+			for (int i = 0; i < text.length(); i++)
 			{
-				System.out.println(tokenOrSeparator);
-				if (PythonSpecificTerms.isToken(tokenOrSeparator))
-					if (hasSeparator)
-						hasSeparator = false;
+				int charCodeAtIndex = text.charAt(i);
+				if (charCodeAtIndex == 40)
+					unpairedLeftParentheses++;
+				else if (charCodeAtIndex == 41)
+					if (unpairedLeftParentheses > 0)
+						unpairedLeftParentheses--;
 					else
 						return true;
-				else
-					hasSeparator = true;
 			}
+
+			if (unpairedLeftParentheses > 0)
+				return true;
 		}
 
 		return false;
@@ -38,7 +42,7 @@ public final class PythonParenthesesErrorRule extends ErrorRule
 	public void displayFixedErrorLine(CodeError error)
 	{
 		String message = "You have unmatched parentheses.\nYour code was: \n";
-		message += error.getLine().getLine() + "\n";
+		message += error.getLine().getText() + "\n";
 		message += "Did you mean: \n";
 		message += getCorrectedLine(error);
 
@@ -47,7 +51,9 @@ public final class PythonParenthesesErrorRule extends ErrorRule
 
 	private String getCorrectedLine(CodeError error)
 	{
-		return null;
+		String correctedLine = "";
+
+		return correctedLine;
 	}
 
 }
