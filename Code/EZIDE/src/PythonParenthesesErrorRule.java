@@ -52,6 +52,8 @@ public final class PythonParenthesesErrorRule extends ErrorRule
 	private String getCorrectedLine(CodeError error)
 	{
 		String correctedLine = "";
+		
+		
 
 		return correctedLine;
 	}
