@@ -13,7 +13,7 @@ public final class PythonErrorHandler extends ErrorHandler
 	{
 		for (ErrorRule errorRuleClass : errorRuleChecklist)
 			if (errorRuleClass.isThisErrorRule(error))
-				errorRuleClass.displayFixedErrorLine(error);
+				errorRuleClass.displayFixedErrorMessage(error);
 	}
 
 	@Override

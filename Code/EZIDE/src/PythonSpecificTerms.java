@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.HashSet;
 
 public final class PythonSpecificTerms
@@ -5,6 +6,20 @@ public final class PythonSpecificTerms
 	private static HashSet<String> tokenSeparators = new HashSet<>();
 
 	private static HashSet<Integer> tokenPossibleCharacters = new HashSet<>();
+
+	public static Process executePythonCode(String command)
+	{
+		try
+		{
+			return Runtime.getRuntime().exec(command);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
+	}
 
 	public static void setAllTerms()
 	{
@@ -27,7 +42,7 @@ public final class PythonSpecificTerms
 	{
 		boolean isToken = PythonSpecificTerms.getTokenPossibleCharacters().contains((int) test.charAt(0))
 				|| test.substring(0, 1).equals("\"");
-		
+
 		return isToken;
 	}
 

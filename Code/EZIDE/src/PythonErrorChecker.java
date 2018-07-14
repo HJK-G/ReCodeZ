@@ -12,26 +12,13 @@ public final class PythonErrorChecker extends ErrorChecker
 	@Override
 	public CodeError getError(int lineNumber)
 	{
-		Process results = runPythonCheckForSyntax(lineNumber);
+		String command = "python /Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/CheckForSyntaxError.py ";
+		Process results = PythonSpecificTerms.executePythonCode(command + file.getFilePath() + " " + lineNumber);
 		Scanner errorReader = new Scanner(results.getInputStream());
 		CodeError error = getErrorFromReader(errorReader);
 
 		errorReader.close();
 		return error;
-	}
-
-	private Process runPythonCheckForSyntax(int lineNumber)
-	{
-		String command = "python /Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/CheckForSyntaxError.py ";
-		try
-		{
-			return Runtime.getRuntime().exec(command + file.getFilePath() + " " + lineNumber);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	private CodeError getErrorFromReader(Scanner errorReader)
@@ -53,30 +40,44 @@ public final class PythonErrorChecker extends ErrorChecker
 	private ArrayList<String> separateIntoTokensAndSeparators(String text)
 	{
 		ArrayList<String> separated = new ArrayList<>();
-		String prevString = "";
+		String previousString = "";
 		boolean inToken = false;
+		boolean inQuote = false;
+
 		for (int i = 0; i < text.length(); i++)
 		{
-			if (PythonSpecificTerms.getTokenPossibleCharacters().contains((int) text.charAt(i)))
+			char currentCharacter = text.charAt(i);
+			boolean endQuote = false;
+			if (currentCharacter == '\"' || currentCharacter == '\'')
+				if (inQuote)
+					endQuote = true;
+				else
+					inQuote = true;
+
+			if (PythonSpecificTerms.getTokenPossibleCharacters().contains((int) currentCharacter) || inQuote)
 			{
-				
+				if (!inToken && i != 0)
+				{
+					separated.add(previousString);
+					previousString = "";
+				}
+				previousString += currentCharacter;
+				inToken = true;
 			}
 			else
 			{
-
+				if (inToken)
+				{
+					separated.add(previousString);
+					previousString = "";
+				}
+				previousString += currentCharacter;
+				inToken = false;
 			}
+			if (endQuote)
+				inQuote = false;
 		}
-
-		separated.add("print");
-		separated.add(" (");
-		separated.add("3");
-		separated.add(" + ");
-		separated.add("9");
-		separated.add(" * (");
-		separated.add("4");
-		separated.add(" + ");
-		separated.add("5");
-		separated.add(")");
+		separated.add(previousString);
 
 		return separated;
 	}

@@ -35,11 +35,10 @@ public final class PythonParenthesesErrorRule extends ErrorRule
 			return true;
 
 		return false;
-
 	}
 
 	@Override
-	public void displayFixedErrorLine(CodeError error)
+	public void displayFixedErrorMessage(CodeError error)
 	{
 		String message = "You have unmatched parentheses.\nYour code was: \n";
 		message += error.getLine().getText() + "\n";
@@ -51,6 +50,7 @@ public final class PythonParenthesesErrorRule extends ErrorRule
 
 	private String getCorrectedLine(CodeError error)
 	{
+		String previousLine = error.getLine().getText();
 		String correctedLine = "";
 		
 		

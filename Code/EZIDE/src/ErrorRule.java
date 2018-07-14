@@ -2,7 +2,7 @@ public abstract class ErrorRule
 {
 	public abstract boolean isThisErrorRule(CodeError error);
 
-	public abstract void displayFixedErrorLine(CodeError error);
+	public abstract void displayFixedErrorMessage(CodeError error);
 
 	protected static int countNumberOfSubstring(String text, String lookFor)
 	{
