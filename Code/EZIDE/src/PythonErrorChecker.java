@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -66,6 +65,8 @@ public final class PythonErrorChecker extends ErrorChecker
 			}
 			else
 			{
+				if (currentCharacter == '=')
+					System.out.println("ASD");
 				if (inToken)
 				{
 					separated.add(previousString);
