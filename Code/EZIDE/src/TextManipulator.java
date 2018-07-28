@@ -1,26 +1,17 @@
 import java.io.IOException;
 import java.util.HashSet;
 
-public final class PythonSpecificTerms
+public final class TextManipulator
 {
 	private static HashSet<String> tokenSeparators = new HashSet<>();
 
 	private static HashSet<Integer> tokenPossibleCharacters = new HashSet<>();
-
-	public static Process executePythonCode(String command)
+	
+	public TextManipulator(String text)
 	{
-		try
-		{
-			return Runtime.getRuntime().exec(command);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-
-		return null;
+		setAllTerms();
 	}
-
+	
 	public static void setAllTerms()
 	{
 		setTokenPossibleCharacters();
@@ -38,9 +29,23 @@ public final class PythonSpecificTerms
 		tokenPossibleCharacters.add(46);
 	}
 
+	public static Process executeCommand(String command)
+	{
+		try
+		{
+			return Runtime.getRuntime().exec(command);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
 	public static boolean isToken(String test)
 	{
-		boolean isToken = PythonSpecificTerms.getTokenPossibleCharacters().contains((int) test.charAt(0))
+		boolean isToken = tokenPossibleCharacters.contains((int) test.charAt(0))
 				|| test.substring(0, 1).equals("\"");
 
 		return isToken;

@@ -2,18 +2,14 @@ import parser
 import os
 import sys
 
-
-f=open(sys.argv[1],"r")
-fileList=f.readlines()
-st=fileList[int(sys.argv[2])]
+st=sys.argv[1]
 
 try:
     parser.suite(st)
-    print("0")
+    print("Not Error")
 except SyntaxError as se:
-    print("1")
+    print("Error")
     print(se.msg)
     print(se.text)
-    print(se.lineno)
     print(se.offset)
         

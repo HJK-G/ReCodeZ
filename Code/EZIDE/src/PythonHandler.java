@@ -6,10 +6,9 @@ public final class PythonHandler extends CodeHandler
 		errorChecker = new PythonErrorChecker(file);
 		errorHandler = new PythonErrorHandler();
 
-		PythonSpecificTerms.setAllTerms();
+		TextManipulator.setAllTerms();
 	}
 
-	@Override
 	public void checkCode()
 	{
 		for (LineOfCode line : file.getLinesOfFile())

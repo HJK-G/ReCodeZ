@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public final class PythonParenthesesErrorRule extends ErrorRule
 {
 	@Override
@@ -43,16 +45,17 @@ public final class PythonParenthesesErrorRule extends ErrorRule
 		String message = "You have unmatched parentheses.\nYour code was: \n";
 		message += error.getLine().getText() + "\n";
 		message += "Did you mean: \n";
-		message += getCorrectedLine(error);
+		message += getCorrectedText(error);
 
 		System.out.println(message);
 	}
 
-	private String getCorrectedLine(CodeError error)
+	private String getCorrectedText(CodeError error)
 	{
 		String correctedLine = "";
-		
-		
+		String text = error.getLine().getText();
+		boolean inParentheses = false;
+		String parenthesesExpression = "";
 
 		return correctedLine;
 	}
