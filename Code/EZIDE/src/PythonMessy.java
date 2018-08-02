@@ -85,20 +85,30 @@ public final class PythonMessy
 				message += text.charAt(i);
 
 			String correctedLine = "";
-			int leftParentheses = 0;
 			String prevToken = "";
-			boolean inToken = false;
+			boolean inParentheses = false;
 			for (; i < text.length(); i++)
 			{
-				char currentChar = text.charAt(i);
+				char currChar = text.charAt(i);
 
-				if (keywords.contains(prevToken))
+				if (keywords.contains(prevToken) && !inParentheses)
 				{
 					correctedLine += prevToken;
 					prevToken = "";
 				}
-				prevToken += currentChar;
+
+				if (currChar != ' ')
+				{
+					prevToken += currChar;
+				}
+
+				if (isFunction(prevToken))
+				{
+					
+				}
 			}
+
+			message += correctedLine;
 
 			System.out.println(message);
 		}
