@@ -2,11 +2,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
 
-public final class PythonMessy
+public class PythonMessy
 {
 	ArrayList<String> file;
 
@@ -18,13 +17,27 @@ public final class PythonMessy
 		try
 		{
 			BufferedReader f = new BufferedReader(new FileReader(filePath));
-
+			String suite = "";
+			boolean inSuite = false;
 			while (f.ready())
 			{
 				String line = f.readLine();
 				if (line.trim().length() == 0)
 					continue;
-				file.add(line);
+				inSuite = line.charAt(0) == ' ';
+
+				if (inSuite)
+					suite += line + "\n";
+				else
+				{
+					if (!suite.equals(""))
+					{
+						file.add(suite);
+						suite = "";
+					}
+					else
+						file.add(line);
+				}
 			}
 			f.close();
 
@@ -42,36 +55,43 @@ public final class PythonMessy
 		for (String line : file)
 		{
 			System.out.println(line);
-			String command = "python /Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/CheckForSyntaxError.py ";
-			Scanner results = new Scanner(TextManipulator.executeCommand(command + line).getInputStream());
-			if (results.nextLine().equals("Not Error"))
+			String[] command =
+				{ "python", System.getProperty("user.dir") + "/PythonCode/Compile.py", line };
+			Scanner results = new Scanner(executeCommand(command).getErrorStream());
+			if (!results.hasNext())
 				continue;
-			String errorMessage = results.nextLine();
-			String text = results.nextLine();
 			results.nextLine();
-			int charNum = Integer.parseInt(results.nextLine());
-			System.out.println(errorMessage + "\n" + text + "\n" + charNum);
+			results.nextLine();
+			results.nextLine();
+			results.nextLine();
+			String text = results.nextLine();
+			String locationBad = results.nextLine();
+			String errorMessage = results.nextLine();
+			System.out.println(text + "\n" + locationBad + "\n" + errorMessage);
 
 			results.close();
+			if (text.length() > 0)
+				continue;
 
-			if (errorMessage.equals("invalid syntax") || errorMessage.equals("unexpected EOF while parsing"))
+			if (errorMessage.equals("SyntaxError: invalid syntax")
+					|| errorMessage.equals("SyntaxError: unexpected EOF while parsing"))
 			{
-				int unpairedLeftParentheses = 0;
+				int unpairedLeftParen = 0;
 				boolean error = false;
 
 				for (int i = 0; i < text.length(); i++)
 				{
-					int charCodeAtIndex = text.charAt(i);
-					if (charCodeAtIndex == 40)
-						unpairedLeftParentheses++;
-					else if (charCodeAtIndex == 41)
-						if (unpairedLeftParentheses > 0)
-							unpairedLeftParentheses--;
+					char currChar = text.charAt(i);
+					if (currChar == '(')
+						unpairedLeftParen++;
+					else if (currChar == ')')
+						if (unpairedLeftParen > 0)
+							unpairedLeftParen--;
 						else
 							error = true;
 				}
 
-				if (unpairedLeftParentheses == 0)
+				if (unpairedLeftParen == 0)
 					continue;
 				if (!error)
 					continue;
@@ -86,25 +106,33 @@ public final class PythonMessy
 
 			String correctedLine = "";
 			String prevToken = "";
-			boolean inParentheses = false;
+			boolean inFunctionCall = false;
+			int parenCountInCall = 0;
+			String functionName = "";
 			for (; i < text.length(); i++)
 			{
 				char currChar = text.charAt(i);
 
-				if (keywords.contains(prevToken) && !inParentheses)
+				if (!inFunctionCall)
 				{
-					correctedLine += prevToken;
-					prevToken = "";
+					if (keywords.contains(prevToken))
+					{
+						correctedLine += " " + prevToken;
+						prevToken = "";
+					}
+
+					if (false)
+					{
+						correctedLine += " " + prevToken;
+						prevToken = "";
+						inFunctionCall = true;
+						functionName = prevToken;
+					}
 				}
 
 				if (currChar != ' ')
 				{
 					prevToken += currChar;
-				}
-
-				if (isFunction(prevToken))
-				{
-					
 				}
 			}
 
@@ -114,7 +142,7 @@ public final class PythonMessy
 		}
 	}
 
-	public static Process executeCommand(String command)
+	public static Process executeCommand(String[] command)
 	{
 		try
 		{
