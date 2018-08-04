@@ -122,13 +122,6 @@ public class PythonMessy
 			{
 				char currChar = text.charAt(i);
 
-				if (errorLoc.charAt(i) == '^')
-				{
-					if (parenthesesCount[0] < parenthesesCount[1])
-						continue;
-					else
-						prevToken += ")";
-				}
 				if (currChar != ' ')
 				{
 					prevToken += currChar;
@@ -143,6 +136,14 @@ public class PythonMessy
 					}
 					inToken = false;
 				}
+				if (errorLoc.charAt(i) == '^')
+				{
+					if (parenthesesCount[0] < parenthesesCount[1])
+						continue;
+					else
+						prevToken += ")";
+				}
+
 			}
 			correctedLine += " " + prevToken;
 
