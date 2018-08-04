@@ -1,66 +1,53 @@
 package io.kidspython.handlers;
 
 import java.util.HashSet;
-import java.util.Scanner;
 
-public class ColonErrorChecker extends ErrorChecker
-{
-	HashSet<String> keywords;
+import io.kidspython.TerminalOutput;
 
-	public ColonErrorChecker(String filePath)
-	{
+public class ColonErrorChecker extends ErrorChecker {
+	private HashSet<String> keywords;
+
+	public ColonErrorChecker(String filePath) {
 		super(filePath);
 		keywords = new HashSet<>();
 		setKeywords();
 	}
 
 	@Override
-	public boolean handleWithThis()
-	{
+	public boolean handleWithThis() {
 		boolean handlesWithThis = false;
-		for (String line : file)
-		{
-			System.out.println(line);
-			String[] command =
-				{ "python", System.getProperty("user.dir") + "/PythonCode/Compile.py", line };
-			Scanner results = new Scanner(executeCommand(command).getErrorStream());
-			if (!results.hasNext())
+		for (String line : file) {
+			TerminalOutput tOutput = getTerminalOutput(line);
+			if (tOutput == null) {
 				continue;
-			results.nextLine();
-			results.nextLine();
-			results.nextLine();
-			results.nextLine();
-			String text = results.nextLine();
-			String errorLoc = results.nextLine();
-			String errorMessage = results.nextLine();
-			System.out.println(text + "\n" + errorLoc + "\n" + errorMessage);
+			}
+			String text = tOutput.getText();
 
 			String message = "";
 			int i = 0;
-			while (text.charAt(i) == ' ' || text.charAt(i) == '\t')
-			{
+			while (text.charAt(i) == ' ' || text.charAt(i) == '\t') {
 				message += text.charAt(i);
 				i++;
 			}
 
-			for (String kword : keywords)
-			{
-				if (text.startsWith(kword))
-				{
-					if (!text.endsWith(":"))
-					{
+			for (String kword : keywords) {
+				if (text.startsWith(kword)) {
+					if (!text.endsWith(":")) {
 						text += ":";
 						handlesWithThis = true;
 					}
 				}
 			}
+
+			message += text;
+
+			System.out.println(message);
 		}
 
 		return handlesWithThis;
 	}
 
-	private void setKeywords()
-	{
+	private void setKeywords() {
 		keywords.add("class");
 		keywords.add("try");
 		keywords.add("def");
