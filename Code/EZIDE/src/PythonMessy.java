@@ -65,35 +65,43 @@ public class PythonMessy
 			results.nextLine();
 			results.nextLine();
 			String text = results.nextLine();
-			String locationBad = results.nextLine();
+			String errorLoc = results.nextLine();
 			String errorMessage = results.nextLine();
-			System.out.println(text + "\n" + locationBad + "\n" + errorMessage);
+			System.out.println(text + "\n" + errorLoc + "\n" + errorMessage);
 
 			results.close();
-			if (text.length() > 0)
-				continue;
 
+			int[] parenthesesCount = new int[2];
 			if (errorMessage.equals("SyntaxError: invalid syntax")
 					|| errorMessage.equals("SyntaxError: unexpected EOF while parsing"))
 			{
-				int unpairedLeftParen = 0;
-				boolean error = false;
+				boolean pastError = false;
+				boolean isError = false;
 
 				for (int i = 0; i < text.length(); i++)
 				{
 					char currChar = text.charAt(i);
+
 					if (currChar == '(')
-						unpairedLeftParen++;
+						parenthesesCount[pastError ? 1 : 0]++;
 					else if (currChar == ')')
-						if (unpairedLeftParen > 0)
-							unpairedLeftParen--;
-						else
-							error = true;
+					{
+						parenthesesCount[pastError ? 1 : 0]--;
+						if (parenthesesCount[0] + parenthesesCount[1] < 0)
+							isError = true;
+					}
+
+					if (errorLoc.charAt(i) == '^')
+						pastError = true;
 				}
 
-				if (unpairedLeftParen == 0)
-					continue;
-				if (!error)
+				int sum = parenthesesCount[0] + parenthesesCount[1];
+				System.out.println(parenthesesCount[0] + " " + parenthesesCount[1]);
+
+				if (sum != 0)
+					isError = true;
+
+				if (!isError)
 					continue;
 			}
 
@@ -102,39 +110,41 @@ public class PythonMessy
 
 			int i = 0;
 			while (text.charAt(i) == ' ' || text.charAt(i) == '\t')
+			{
 				message += text.charAt(i);
+				i++;
+			}
 
 			String correctedLine = "";
 			String prevToken = "";
-			boolean inFunctionCall = false;
-			int parenCountInCall = 0;
-			String functionName = "";
+			boolean inToken = false;
 			for (; i < text.length(); i++)
 			{
 				char currChar = text.charAt(i);
 
-				if (!inFunctionCall)
+				if (errorLoc.charAt(i) == '^')
 				{
-					if (keywords.contains(prevToken))
-					{
-						correctedLine += " " + prevToken;
-						prevToken = "";
-					}
-
-					if (false)
-					{
-						correctedLine += " " + prevToken;
-						prevToken = "";
-						inFunctionCall = true;
-						functionName = prevToken;
-					}
+					if (parenthesesCount[0] < parenthesesCount[1])
+						continue;
+					else
+						prevToken += ")";
 				}
-
 				if (currChar != ' ')
 				{
 					prevToken += currChar;
+					inToken = true;
+				}
+				else
+				{
+					if (inToken)
+					{
+						correctedLine += " " + prevToken;
+						prevToken = "";
+					}
+					inToken = false;
 				}
 			}
+			correctedLine += " " + prevToken;
 
 			message += correctedLine;
 
