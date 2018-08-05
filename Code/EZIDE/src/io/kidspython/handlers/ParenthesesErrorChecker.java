@@ -15,52 +15,44 @@ public class ParenthesesErrorChecker extends ErrorChecker {
 				continue;
 			}
 			String text = tOutput.getText();
-			String errorMsg = tOutput.getErrorMsg();
-			String errorLoc = tOutput.getErrorMsg();
 
-			int[] parenthesesCount = new int[2];
-			if (errorMsg.equals("SyntaxError: invalid syntax")
-					|| errorMsg.equals("SyntaxError: unexpected EOF while parsing")) {
-				boolean pastError = false;
-				boolean isError = false;
+			boolean isError = false;
+			int unpairedLeftParen = 0;
+			for (int i = 0; i < text.length(); i++) {
+				char currChar = text.charAt(i);
 
-				for (int i = 0; i < text.length(); i++) {
-					char currChar = text.charAt(i);
-
-					if (currChar == '(')
-						parenthesesCount[pastError ? 1 : 0]++;
-					else if (currChar == ')') {
-						parenthesesCount[pastError ? 1 : 0]--;
-						if (parenthesesCount[0] + parenthesesCount[1] < 0)
-							isError = true;
+				if (currChar == '(')
+					unpairedLeftParen++;
+				else if (currChar == ')') {
+					unpairedLeftParen--;
+					if (unpairedLeftParen < 0) {
+						isError = true;
+						break;
 					}
-
-					if (errorLoc.charAt(i) == '^')
-						pastError = true;
 				}
+			}
 
-				int sum = parenthesesCount[0] + parenthesesCount[1];
-				System.out.println(parenthesesCount[0] + " " + parenthesesCount[1]);
+			if (unpairedLeftParen != 0) {
+				isError = true;
+			}
 
-				if (sum != 0) {
-					isError = true;
-				}
-
-				if (!isError)
-					continue;
-				else {
-					handlesWithThis = true;
-				}
+			if (!isError)
+				continue;
+			else {
+				handlesWithThis = true;
 			}
 
 			String message = "You have unmatched parentheses. \nYour code was: \n";
 			message += text + "\n";
 			String markersLeftParen = "";
 			String markersRightParen = "";
+			int numLeftParen = 0;
+			int numRightParen = 0;
 			for (int i = 0; i < text.length(); i++) {
 				char currChar = text.charAt(i);
 				if (currChar == '(') {
 					markersLeftParen += '^';
+					numLeftParen++;
 				}
 				else {
 					markersLeftParen += ' ';
@@ -68,13 +60,22 @@ public class ParenthesesErrorChecker extends ErrorChecker {
 
 				if (currChar == ')') {
 					markersRightParen += '^';
+					numRightParen++;
 				}
 				else {
 					markersRightParen += ' ';
 				}
 
 			}
-			message += markersLeftParen + "\n" + markersRightParen;
+			message += markersLeftParen + "\n" + markersRightParen + "\n";
+			message += "You have " + numLeftParen + " left parentheses.\n";
+			message += "You have " + numRightParen + " right parentheses.\n";
+			if (numLeftParen == numRightParen) {
+				message += "Your parentheses have to match.";
+			}
+			else {
+				message += "You have to have the same number of open and close parentheses and they have to match.";
+			}
 			System.out.println(message);
 		}
 

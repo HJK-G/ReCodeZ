@@ -30,16 +30,20 @@ public class ColonErrorChecker extends ErrorChecker {
 				i++;
 			}
 
-			for (String kword : keywords) {
-				if (text.startsWith(kword)) {
-					if (!text.endsWith(":")) {
+			String trimmedText = text.trim();
+			boolean isError = false;
+			for (String keyword : keywords) {
+				if (trimmedText.startsWith(keyword)) {
+					if (!trimmedText.endsWith(":")) {
 						text += ":";
 						handlesWithThis = true;
+						isError = true;
 					}
 				}
 			}
 
-			message += text;
+			if (!isError)
+				continue;
 
 			System.out.println(message);
 		}
