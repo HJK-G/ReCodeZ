@@ -2,53 +2,38 @@ package io.kidspython.handlers;
 
 import java.util.HashSet;
 
+import io.kidspython.Block;
 import io.kidspython.TerminalOutput;
 
 public class ColonErrorChecker extends ErrorChecker {
 	private HashSet<String> keywords;
 
-	public ColonErrorChecker(String filePath) {
-		super(filePath);
+	public ColonErrorChecker() {
 		keywords = new HashSet<>();
 		setKeywords();
 	}
 
 	@Override
-	public boolean handleWithThis() {
-		boolean handlesWithThis = false;
-		for (String line : file) {
-			TerminalOutput tOutput = getTerminalOutput(line);
-			if (tOutput == null) {
-				continue;
-			}
-			String text = tOutput.getText();
+	public boolean handleWithThis(Block currScope, TerminalOutput terminalOutput) {
+		String text = terminalOutput.getText();
 
-			String message = "";
-			int i = 0;
-			while (text.charAt(i) == ' ' || text.charAt(i) == '\t') {
-				message += text.charAt(i);
-				i++;
-			}
-
-			String trimmedText = text.trim();
-			boolean isError = false;
-			for (String keyword : keywords) {
-				if (trimmedText.startsWith(keyword)) {
-					if (!trimmedText.endsWith(":")) {
-						text += ":";
-						handlesWithThis = true;
-						isError = true;
-					}
+		String message = "";
+		boolean isError = false;
+		for (String keyword : keywords) {
+			if (text.startsWith(keyword)) {
+				if (!text.endsWith(":")) {
+					text += ":";
+					isError = true;
 				}
 			}
-
-			if (!isError)
-				continue;
-
-			System.out.println(message);
 		}
 
-		return handlesWithThis;
+		if (!isError)
+			return false;
+
+		System.out.println(message);
+
+		return true;
 	}
 
 	private void setKeywords() {

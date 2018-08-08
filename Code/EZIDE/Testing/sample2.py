@@ -1,3 +1,5 @@
-#missing right p
-def asdf( a:
-          print(a+1)
+# missing right p
+
+
+def asdf(a:
+    print(a+1)
