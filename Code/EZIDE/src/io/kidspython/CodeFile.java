@@ -50,6 +50,19 @@ public class CodeFile {
 		return currScope;
 	}
 
+	public static void traverse(Block file) {
+		System.out.println("NEW BLOCK");
+		Block currBlock = file.getBlock();
+		while (currBlock != null) {
+			System.out.println(currBlock.getIndentedLine());
+			if (!currBlock.isSingleLine()) {
+				traverse(currBlock);
+			}
+
+			currBlock = file.getBlock();
+		}
+	}
+
 	public Block getFile() {
 		return file;
 	}

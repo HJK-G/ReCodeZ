@@ -23,7 +23,6 @@ public class CodeFileTraverser {
 		while (currBlock != null) {
 			System.out.println(currBlock.getIndentedLine());
 			if (!currBlock.isSingleLine()) {
-				System.out.println("asd");
 				checkForErrors(errorChecker, currBlock);
 			}
 			String line = currBlock.getLine();
@@ -32,9 +31,6 @@ public class CodeFileTraverser {
 				currBlock = currScope.getBlock();
 				continue;
 			}
-			System.out.println(terminalOutput.getErrorMsg());
-			System.out.println(terminalOutput.getText());
-			System.out.println(terminalOutput.getErrorLoc());
 
 			errorChecker.checkError(currScope, terminalOutput);
 
