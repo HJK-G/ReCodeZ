@@ -5,6 +5,7 @@ import io.kidspython.TerminalOutput;
 
 public abstract class ErrorChecker {
 	protected ErrorChecker successor;
+	protected String message = "";
 
 	public void checkError(Block currScope, TerminalOutput terminalOutput) {
 		if (!handleWithThis(currScope, terminalOutput)) {
@@ -18,6 +19,10 @@ public abstract class ErrorChecker {
 
 	public void setSuccessor(ErrorChecker successor) {
 		this.successor = successor;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 
 }

@@ -33,7 +33,7 @@ public class ParenthesesErrorChecker extends ErrorChecker {
 			return false;
 		}
 
-		String message = "You have unmatched parentheses. \nYour code was: \n";
+		message = "You have unmatched parentheses. \nYour code was: \n";
 		message += text + "\n";
 		String markersLeftParen = "";
 		String markersRightParen = "";

@@ -25,42 +25,32 @@ public class CodeFile {
 		return buildScope("", 0, "");
 	}
 
-	private static Block buildScope(String beginningLine, int indentAmt, String indent) throws IOException {
+	private static Block buildScope(String beginningLine, int indentAmt, String prevIndent) throws IOException {
 		Block currScope = new Block(beginningLine, indentAmt);
 
 		while (fileReader.ready()) {
+			fileReader.mark(100000);
 			String currLine = fileReader.readLine();
-			String currIndent = "";
-
-			for (int i = 0; i < currLine.length() && (currLine.charAt(i) == ' ' || currLine.charAt(i) == '\t'); i++) {
-				currIndent += currLine.charAt(i) == '\t' ? "    " : " ";
-			}
-
-			if (currIndent.equals(indent)) {
-				currScope.addBlock(new Block(currLine, indentAmt));
-			}
-			else if (currIndent.length() > indent.length()) {
-				currScope.addBlock(buildScope(currLine, indentAmt + 1, currIndent));
+			String currIndent = getIndent(currLine);
+			if (currIndent.length() <= prevIndent.length() && indentAmt > 0) {
+				fileReader.reset();
+				return currScope;
 			}
 			else {
-				break;
+				currScope.addBlock(buildScope(currLine, indentAmt + 1, currIndent));
 			}
 		}
 
 		return currScope;
 	}
 
-	public static void traverse(Block file) {
-		System.out.println("NEW BLOCK");
-		Block currBlock = file.getBlock();
-		while (currBlock != null) {
-			System.out.println(currBlock.getIndentedLine());
-			if (!currBlock.isSingleLine()) {
-				traverse(currBlock);
-			}
-
-			currBlock = file.getBlock();
+	private static String getIndent(String line) {
+		String indent = "";
+		for (int i = 0; i < line.length() && (line.charAt(i) == ' ' || line.charAt(i) == '\t'); i++) {
+			indent += line.charAt(i) == '\t' ? "    " : " ";
 		}
+
+		return indent;
 	}
 
 	public Block getFile() {

@@ -5,9 +5,9 @@ import io.kidspython.handlers.ColonErrorChecker;
 import io.kidspython.handlers.ErrorChecker;
 import io.kidspython.handlers.ParenthesesErrorChecker;
 
-public class Main {
+public class Framework {
 	public static void main(String[] args) {
-		String filePath = System.getProperty("user.dir") + "/Testing/sample3.py";
+		String filePath = System.getProperty("user.dir") + "/Testing/sample6.py";
 		CodeFile file = new CodeFile(filePath);
 		CodeFileTraverser fileTraverser = new CodeFileTraverser(file);
 		ErrorChecker parentheses = new ParenthesesErrorChecker();
@@ -15,8 +15,6 @@ public class Main {
 
 		parentheses.setSuccessor(colons);
 
-		// fileTraverser.traverse(parentheses);
-		CodeFile.traverse(file.getFile());
-
+		fileTraverser.traverse(parentheses);
 	}
 }

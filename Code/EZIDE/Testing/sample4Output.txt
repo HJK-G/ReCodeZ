@@ -1,0 +1,8 @@
+You have unmatched parentheses. 
+Your code was: 
+    print(("Name: " + name + " Age: " + str(age))
+         ^^                                ^     
+                                               ^^
+You have 3 left parentheses.
+You have 2 right parentheses.
+You have to have the same number of open and close parentheses and they have to match.
