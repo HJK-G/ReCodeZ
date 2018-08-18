@@ -15,7 +15,7 @@ public class ColonErrorChecker extends ErrorChecker {
 
 	@Override
 	public boolean handleWithThis(Block currScope, TerminalOutput terminalOutput) {
-		String text = terminalOutput.getText();
+		String text = terminalOutput.getText().trim();
 
 		String message = "You have a missing colon.\n";
 		boolean isError = false;
@@ -31,8 +31,10 @@ public class ColonErrorChecker extends ErrorChecker {
 		if (!isError)
 			return false;
 
+		message += "Did you mean: \n";
 		message += text;
 		System.out.println(message);
+		messages.add(message);
 
 		return true;
 	}

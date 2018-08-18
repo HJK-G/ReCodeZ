@@ -1,11 +1,14 @@
 package io.kidspython.handlers;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import io.kidspython.Block;
 import io.kidspython.TerminalOutput;
 
 public abstract class ErrorChecker {
 	protected ErrorChecker successor;
-	protected String message = "";
+	protected static Queue<String> messages = new LinkedList<>();
 
 	public void checkError(Block currScope, TerminalOutput terminalOutput) {
 		if (!handleWithThis(currScope, terminalOutput)) {
@@ -21,8 +24,8 @@ public abstract class ErrorChecker {
 		this.successor = successor;
 	}
 
-	public String getMessage() {
-		return message;
+	public static Queue<String> getMessages() {
+		return messages;
 	}
 
 }

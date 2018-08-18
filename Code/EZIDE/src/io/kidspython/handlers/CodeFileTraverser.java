@@ -19,27 +19,24 @@ public class CodeFileTraverser {
 	}
 
 	public void checkForErrors(ErrorChecker errorChecker, Block currScope) {
-		Block currBlock = currScope.getBlock();
-		while (currBlock != null) {
-			System.out.println(currBlock.getIndentedLine());
-			if (!currBlock.isSingleLine()) {
-				checkForErrors(errorChecker, currBlock);
-			}
+		Block currBlock = currScope.getBlock(0);
+		for (int pos = 0; currBlock != null; pos++, currBlock = currScope.getBlock(pos)) {
 			String line = currBlock.getLine();
 			TerminalOutput terminalOutput = getTerminalOutput(line);
 			if (terminalOutput == null) {
-				currBlock = currScope.getBlock();
 				continue;
 			}
 
 			errorChecker.checkError(currScope, terminalOutput);
 
-			currBlock = currScope.getBlock();
+			if (!currBlock.isSingleLine()) {
+				checkForErrors(errorChecker, currBlock);
+			}
 		}
 	}
 
-	private static TerminalOutput getTerminalOutput(String line) {
-		String[] command = { "python", System.getProperty("user.dir") + "/PythonCode/Compile.py", line };
+	private static TerminalOutput getTerminalOutput(String code) {
+		String[] command = { "python", System.getProperty("user.dir") + "/PythonCode/Compile.py", code };
 		Scanner terminalOutput = new Scanner(executeCommand(command).getErrorStream());
 
 		if (!terminalOutput.hasNext()) {

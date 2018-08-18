@@ -6,7 +6,7 @@ import io.kidspython.TerminalOutput;
 public class ParenthesesErrorChecker extends ErrorChecker {
 
 	public boolean handleWithThis(Block currScope, TerminalOutput terminalOutput) {
-		String text = terminalOutput.getText();
+		String text = terminalOutput.getText().trim();
 
 		boolean isError = false;
 		int unpairedLeftParen = 0;
@@ -27,13 +27,12 @@ public class ParenthesesErrorChecker extends ErrorChecker {
 		if (unpairedLeftParen != 0) {
 			isError = true;
 		}
-		System.out.println(currScope.getLine());
 
 		if (!isError) {
 			return false;
 		}
 
-		message = "You have unmatched parentheses. \nYour code was: \n";
+		String message = "You have unmatched parentheses. \nYour code was: \n";
 		message += text + "\n";
 		String markersLeftParen = "";
 		String markersRightParen = "";
@@ -68,6 +67,7 @@ public class ParenthesesErrorChecker extends ErrorChecker {
 			message += "You have to have the same number of open and close parentheses and they have to match.";
 		}
 		System.out.println(message);
+		messages.add(message);
 
 		return true;
 	}

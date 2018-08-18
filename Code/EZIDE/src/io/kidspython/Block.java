@@ -1,18 +1,17 @@
 package io.kidspython;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 
 public class Block {
 	private String line;
 	private int indentAmt;
-	private Queue<Block> blocksInScope;
+	private ArrayList<Block> blocksInScope;
 	private boolean isSingleLine;
 
 	public Block(String line, int indentAmt) {
 		this.line = line.trim();
 		this.indentAmt = indentAmt;
-		blocksInScope = new LinkedList<>();
+		blocksInScope = new ArrayList<>();
 		isSingleLine = true;
 	}
 
@@ -34,11 +33,11 @@ public class Block {
 		return indent + line;
 	}
 
-	public Block getBlock() {
-		if (blocksInScope.isEmpty()) {
+	public Block getBlock(int pos) {
+		if (pos >= blocksInScope.size()) {
 			return null;
 		}
-		return blocksInScope.remove();
+		return blocksInScope.get(pos);
 	}
 
 	public boolean isSingleLine() {
