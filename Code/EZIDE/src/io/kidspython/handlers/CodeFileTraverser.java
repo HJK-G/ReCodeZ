@@ -36,7 +36,7 @@ public class CodeFileTraverser {
 	}
 
 	private static TerminalOutput getTerminalOutput(String code) {
-		String[] command = { "python", System.getProperty("user.dir") + "/PythonCode/Compile.py", code };
+		String[] command = { "python", "/Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/Compile.py", code };
 		Scanner terminalOutput = new Scanner(executeCommand(command).getErrorStream());
 
 		if (!terminalOutput.hasNext()) {

@@ -5,6 +5,7 @@ import io.kidspython.TerminalOutput;
 
 public class ParenthesesErrorChecker extends ErrorChecker {
 
+	@Override
 	public boolean handleWithThis(Block currScope, TerminalOutput terminalOutput) {
 		String text = terminalOutput.getText().trim();
 

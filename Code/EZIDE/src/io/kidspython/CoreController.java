@@ -10,15 +10,9 @@ import io.kidspython.handlers.ErrorChecker;
 import io.kidspython.handlers.ParenthesesErrorChecker;
 
 @RestController
-public class ErrorCheckerController {
-	@RequestMapping("/texteditor")
-	public String texteditor() {
-		
-		return "";
-	}
-
+public class CoreController {
 	@RequestMapping("/check")
-	public String check(@RequestParam(value = "code", defaultValue = "World") String code) {
+	public String check(@RequestParam(value = "code", defaultValue = "") String code) {
 		CodeFile file = new CodeFile(code, true);
 		CodeFileTraverser fileTraverser = new CodeFileTraverser(file);
 		ErrorChecker parentheses = new ParenthesesErrorChecker();
@@ -27,7 +21,8 @@ public class ErrorCheckerController {
 		parentheses.setSuccessor(colons);
 
 		fileTraverser.traverse(parentheses);
-		return ErrorChecker.getMessages().peek();
+		System.out.println(ErrorChecker.getMessages().peek());
+		return ErrorChecker.getMessages().poll();
 
 	}
 }
