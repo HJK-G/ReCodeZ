@@ -12,7 +12,7 @@ import io.kidspython.handlers.ParenthesesErrorChecker;
 @RestController
 public class CoreController {
 	@RequestMapping("/check")
-	public String check(@RequestParam(value = "code", defaultValue = "") String code) {
+	public String[] check(@RequestParam(value = "code", defaultValue = "") String code) {
 		CodeFile file = new CodeFile(code, true);
 		CodeFileTraverser fileTraverser = new CodeFileTraverser(file);
 		ErrorChecker parentheses = new ParenthesesErrorChecker();
@@ -21,8 +21,13 @@ public class CoreController {
 		parentheses.setSuccessor(colons);
 
 		fileTraverser.traverse(parentheses);
-		System.out.println(ErrorChecker.getMessages().peek());
-		return ErrorChecker.getMessages().poll();
+
+		String[] messages = new String[ErrorChecker.getMessages().size()];
+		for (int i = 0; i < ErrorChecker.getMessages().size(); i++) {
+			messages[i] = ErrorChecker.getMessages().remove();
+		}
+		
+		return messages;
 
 	}
 }

@@ -61,12 +61,8 @@ public class ParenthesesErrorChecker extends ErrorChecker {
 		message += markersLeftParen + "\n" + markersRightParen + "\n";
 		message += "You have " + numLeftParen + " left parentheses.\n";
 		message += "You have " + numRightParen + " right parentheses.\n";
-		if (numLeftParen == numRightParen) {
-			message += "Your parentheses have to match.";
-		}
-		else {
-			message += "You have to have the same number of open and close parentheses and they have to match.";
-		}
+		message += "Your parentheses have to be matching.";
+		
 		System.out.println(message);
 		messages.add(message);
 
