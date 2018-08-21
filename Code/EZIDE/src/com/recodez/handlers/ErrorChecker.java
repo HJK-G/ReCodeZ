@@ -1,10 +1,10 @@
-package io.kidspython.handlers;
+package com.recodez.handlers;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-import io.kidspython.Block;
-import io.kidspython.TerminalOutput;
+import com.recodez.framework.Block;
+import com.recodez.framework.TerminalOutput;
 
 public abstract class ErrorChecker {
 	protected ErrorChecker successor;

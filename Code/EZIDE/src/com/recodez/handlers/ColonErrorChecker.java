@@ -1,9 +1,9 @@
-package io.kidspython.handlers;
+package com.recodez.handlers;
 
 import java.util.HashSet;
 
-import io.kidspython.Block;
-import io.kidspython.TerminalOutput;
+import com.recodez.framework.Block;
+import com.recodez.framework.TerminalOutput;
 
 public class ColonErrorChecker extends ErrorChecker {
 	private HashSet<String> keywords;

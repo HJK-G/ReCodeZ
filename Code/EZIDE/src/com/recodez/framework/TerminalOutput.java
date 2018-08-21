@@ -1,4 +1,4 @@
-package io.kidspython;
+package com.recodez.framework;
 
 public class TerminalOutput {
 	private String text;

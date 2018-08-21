@@ -1,7 +1,6 @@
 function check() {
-    console.log("ASDFF");
     var code = $('#code').val();
-    console.log(code);
+    $('#errors').html('<p id="lastresult"></p>')
 
     $.ajax(
         {
@@ -12,10 +11,8 @@ function check() {
             },
             success: function (result) {
                 console.log(result);
-                $('#secCol').html('<div class="alert alert-primary" role="alert" id="results">Results:<p id="results0"></p></div>')
-                for (i = 0; i < result.length - 1; i++) {
-                    console.log(i);
-                    $('<div class="alert alert-secondary" role="alert"><pre class="tab">' + result[i] + '</pre></div>').insertAfter("#results0")
+                for (i = 0; i < result.length && result[i] != null; i++) {
+                    $('<div class="card bg-light"><div class="card-header" id="heading' + (i + 1) + '"><h5><button class="btn btn-link text-danger collapsed" type="button" data-toggle="collapse" data-target="#collapse' + (i + 1) + '" aria-expanded="false" aria-controls="collapse' + (i + 1) + '">Error ' + (i + 1) + '</button></h5></div><div id="collapse' + (i + 1) + '" class="collapse" aria-labelledby="heading' + (i + 1) + '" data-parent="#errors"><div class="card-body"><pre class="tab text-danger">' + result[i] + '<pre></div></div></div>').insertBefore("#lastresult");
                 }
             },
             error: function (jqXHR, exception) {

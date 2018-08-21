@@ -1,13 +1,14 @@
-package io.kidspython;
+package com.recodez;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.kidspython.handlers.CodeFileTraverser;
-import io.kidspython.handlers.ColonErrorChecker;
-import io.kidspython.handlers.ErrorChecker;
-import io.kidspython.handlers.ParenthesesErrorChecker;
+import com.recodez.framework.CodeFile;
+import com.recodez.handlers.CodeFileTraverser;
+import com.recodez.handlers.ColonErrorChecker;
+import com.recodez.handlers.ErrorChecker;
+import com.recodez.handlers.ParenthesesErrorChecker;
 
 @RestController
 public class CoreController {
@@ -23,10 +24,11 @@ public class CoreController {
 		fileTraverser.traverse(parentheses);
 
 		String[] messages = new String[ErrorChecker.getMessages().size()];
-		for (int i = 0; i < ErrorChecker.getMessages().size(); i++) {
+		int size = ErrorChecker.getMessages().size();
+		for (int i = 0; i < size; i++) {
 			messages[i] = ErrorChecker.getMessages().remove();
 		}
-		
+
 		return messages;
 
 	}

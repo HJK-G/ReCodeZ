@@ -1,4 +1,4 @@
-package io.kidspython;
+package com.recodez;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,10 +7,11 @@ import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
 
-import io.kidspython.handlers.CodeFileTraverser;
-import io.kidspython.handlers.ColonErrorChecker;
-import io.kidspython.handlers.ErrorChecker;
-import io.kidspython.handlers.ParenthesesErrorChecker;
+import com.recodez.framework.CodeFile;
+import com.recodez.handlers.CodeFileTraverser;
+import com.recodez.handlers.ColonErrorChecker;
+import com.recodez.handlers.ErrorChecker;
+import com.recodez.handlers.ParenthesesErrorChecker;
 
 public class Tester {
 	public static void main(String[] args) throws FileNotFoundException, IOException {

@@ -1,4 +1,4 @@
-package io.kidspython.handlers;
+package com.recodez.handlers;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,7 +10,11 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import io.kidspython.CodeFile;
+import com.recodez.framework.CodeFile;
+import com.recodez.handlers.CodeFileTraverser;
+import com.recodez.handlers.ColonErrorChecker;
+import com.recodez.handlers.ErrorChecker;
+import com.recodez.handlers.ParenthesesErrorChecker;
 
 public class ErrorCheckerTest {
 	static String[] correctOutput = { "/Testing/sample1Output.txt", "/Testing/sample2Output.txt",

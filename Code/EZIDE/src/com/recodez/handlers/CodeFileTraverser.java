@@ -1,11 +1,11 @@
-package io.kidspython.handlers;
+package com.recodez.handlers;
 
 import java.io.IOException;
 import java.util.Scanner;
 
-import io.kidspython.Block;
-import io.kidspython.CodeFile;
-import io.kidspython.TerminalOutput;
+import com.recodez.framework.Block;
+import com.recodez.framework.CodeFile;
+import com.recodez.framework.TerminalOutput;
 
 public class CodeFileTraverser {
 	CodeFile file;

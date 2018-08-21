@@ -1,7 +1,7 @@
-package io.kidspython.handlers;
+package com.recodez.handlers;
 
-import io.kidspython.Block;
-import io.kidspython.TerminalOutput;
+import com.recodez.framework.Block;
+import com.recodez.framework.TerminalOutput;
 
 public class ParenthesesErrorChecker extends ErrorChecker {
 
