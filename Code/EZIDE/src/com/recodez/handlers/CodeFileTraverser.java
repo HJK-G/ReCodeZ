@@ -22,8 +22,9 @@ public class CodeFileTraverser {
 		Block currBlock = currScope.getBlock(0);
 		for (int pos = 0; currBlock != null; pos++, currBlock = currScope.getBlock(pos)) {
 			String line = currBlock.getLine();
-			TerminalOutput terminalOutput = getTerminalOutput(line);
-			if (terminalOutput == null) {
+			System.out.println(line);
+			TerminalOutput terminalOutput = TerminalOutput.getTerminalOutput(line);
+			if (terminalOutput.getText() == null) {
 				continue;
 			}
 
@@ -36,7 +37,8 @@ public class CodeFileTraverser {
 	}
 
 	private static TerminalOutput getTerminalOutput(String code) {
-		String[] command = { "python", "/Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/Compile.py", code };
+		String[] command = { "python",
+				"/Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/Compile.py", code };
 		Scanner terminalOutput = new Scanner(executeCommand(command).getErrorStream());
 
 		if (!terminalOutput.hasNext()) {

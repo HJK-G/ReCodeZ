@@ -10,6 +10,13 @@
       "request": "launch",
       "cwd": "${workspaceFolder}/PythonCode",
       "program": "${workspaceFolder}/PythonCode/CheckForSyntaxError.py"
+    },
+    {
+      "name": "Launch Execute.py",
+      "type": "python",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/PythonCode",
+      "program": "${workspaceFolder}/PythonCode/Execute.py"
     }
   ]
 }

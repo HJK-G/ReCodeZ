@@ -1,11 +1,7 @@
 package com.recodez;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import org.apache.commons.io.IOUtils;
 
 import com.recodez.framework.CodeFile;
 import com.recodez.handlers.CodeFileTraverser;
@@ -15,7 +11,7 @@ import com.recodez.handlers.ParenthesesErrorChecker;
 
 public class Tester {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		String filePath = System.getProperty("user.dir") + "/Testing/sample7.py";
+		String filePath = "/Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/Testing/sample1.py";
 		CodeFile file = new CodeFile(filePath);
 		CodeFileTraverser fileTraverser = new CodeFileTraverser(file);
 		ErrorChecker parentheses = new ParenthesesErrorChecker();
@@ -27,8 +23,6 @@ public class Tester {
 
 		String message = ErrorChecker.getMessages().peek();
 
-		String correct = IOUtils
-				.toString(new FileInputStream(new File(System.getProperty("user.dir") + "/Testing/sample7Output.txt")));
 		System.out.println(message);
 	}
 }
