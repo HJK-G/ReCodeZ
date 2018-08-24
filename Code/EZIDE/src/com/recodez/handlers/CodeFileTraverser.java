@@ -22,7 +22,6 @@ public class CodeFileTraverser {
 		Block currBlock = currScope.getBlock(0);
 		for (int pos = 0; currBlock != null; pos++, currBlock = currScope.getBlock(pos)) {
 			String line = currBlock.getLine();
-			System.out.println(line);
 			TerminalOutput terminalOutput = TerminalOutput.getTerminalOutput(line);
 			if (terminalOutput.getText() == null) {
 				continue;

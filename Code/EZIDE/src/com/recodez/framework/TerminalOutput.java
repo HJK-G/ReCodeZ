@@ -40,43 +40,36 @@ public class TerminalOutput {
 		String[] command = { "python",
 				"/Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/CompileAndRun.py",
 				code };
-		Process c = executeCommand(command);
-		Scanner output = new Scanner(executeCommand(command).getInputStream());
+		Process res = executeCommand(command);
+		Scanner compileOutput = new Scanner(res.getInputStream());
+		Scanner errorOutput = new Scanner(res.getErrorStream());
 
-		String firstLine = output.nextLine();
-		// no error
-		if (firstLine.equals("No compile error.")) {
-			return getExecutedOutput(output);
+		// compile error
+		if (!compileOutput.hasNext()) {
+			compileOutput.close();
+			return getCompileErrorOutput(errorOutput);
 		}
 
-		return getCompileErrorOutput(output);
+		// exception error
+		if (errorOutput.hasNext()) {
+			compileOutput.close();
+			return getExceptionErrorOutput(errorOutput);
+		}
+
+		// no error
+		errorOutput.close();
+		return getExecutedOutput(compileOutput);
 	}
 
-	private static TerminalOutput getExecutedOutput(Scanner output) {
-		ArrayList<String> outputLines = new ArrayList<>();
-		String userOutput = "";
-		String line = output.nextLine();
-		System.out.println(line);
-
-		outputLines.add(line);
-		userOutput += line + "\n";
-
-		while (output.hasNext()) {
-			outputLines.add(line);
-			userOutput += line + "\n";
-			line = output.nextLine();
+	private static Process executeCommand(String[] command) {
+		try {
+			return Runtime.getRuntime().exec(command);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
 		}
 
-		output.close();
-
-		// if last line is validator, return file output
-		if (line.equals(
-				"0jxcuviu12@#)*!(@RJddhcv8voijrjqwd0-fisef0dcpxljeqqr83123012pscjzADOQIWJEnzcvje2AFU*(JnklJ(@#!$(%^^@&*IRKDJSZADD{||EQ{WEH~~`")) {
-			return new TerminalOutput(userOutput);
-		}
-
-		// return runtime exception
-		return new TerminalOutput("file", "somewhere", line);
+		return null;
 	}
 
 	private static TerminalOutput getCompileErrorOutput(Scanner errorOutput) {
@@ -91,14 +84,31 @@ public class TerminalOutput {
 		return new TerminalOutput(text, errorLoc, errorMsg);
 	}
 
-	private static Process executeCommand(String[] command) {
-		try {
-			return Runtime.getRuntime().exec(command);
-		}
-		catch (IOException e) {
-			e.printStackTrace();
+	private static TerminalOutput getExceptionErrorOutput(Scanner output) {
+		String line = "";
+		while (output.hasNext()) {
+			line = output.nextLine();
 		}
 
-		return null;
+		return new TerminalOutput("file", "somewhere", line);
 	}
+
+	private static TerminalOutput getExecutedOutput(Scanner output) {
+		output.nextLine();
+
+		String userOutput = "";
+		String line = output.nextLine();
+
+		userOutput += line + "\n";
+
+		while (output.hasNext()) {
+			userOutput += line + "\n";
+			line = output.nextLine();
+		}
+
+		output.close();
+		return new TerminalOutput(userOutput);
+
+	}
+
 }
