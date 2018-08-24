@@ -27,7 +27,7 @@ public class ErrorCheckerTest {
 	public void testParenError1() throws FileNotFoundException, IOException {
 		for (int i = 0; i < output.length; i++) {
 			String filePath = System.getProperty("user.dir") + output[i];
-			CodeFile file = new CodeFile(filePath);
+			CodeFile file = new CodeFile(IOUtils.toString(new FileInputStream(new File(filePath))));
 			CodeFileTraverser fileTraverser = new CodeFileTraverser(file);
 			ErrorChecker parentheses = new ParenthesesErrorChecker();
 			ErrorChecker colons = new ColonErrorChecker();

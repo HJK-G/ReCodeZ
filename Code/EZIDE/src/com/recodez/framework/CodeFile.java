@@ -1,7 +1,6 @@
 package com.recodez.framework;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -9,23 +8,13 @@ import org.apache.commons.io.IOUtils;
 
 public class CodeFile {
 	private Block file;
+	private String fileString = "";
 
 	private static BufferedReader fileReader;
 
-	public CodeFile(String filePath) {
+	public CodeFile(String file) {
 		try {
-			fileReader = new BufferedReader(new FileReader(filePath));
-			file = buildFile();
-			fileReader.close();
-
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public CodeFile(String file, boolean isFile) {
-		try {
+			fileString = file;
 			fileReader = new BufferedReader(new InputStreamReader(IOUtils.toInputStream(file)));
 			this.file = buildFile();
 			fileReader.close();
@@ -70,6 +59,10 @@ public class CodeFile {
 
 	public Block getFile() {
 		return file;
+	}
+
+	public String getFileString() {
+		return fileString;
 	}
 
 }

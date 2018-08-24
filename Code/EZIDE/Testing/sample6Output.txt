@@ -5,4 +5,4 @@ print(3 + 9 * (4 + 5
                     
 You have 2 left parentheses.
 You have 0 right parentheses.
-You have to have the same number of open and close parentheses and they have to match.
+Your parentheses have to be matching.

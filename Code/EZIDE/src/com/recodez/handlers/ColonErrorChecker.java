@@ -33,7 +33,6 @@ public class ColonErrorChecker extends ErrorChecker {
 
 		message += "Did you mean: \n";
 		message += text;
-		System.out.println(message);
 		messages.add(message);
 
 		return true;

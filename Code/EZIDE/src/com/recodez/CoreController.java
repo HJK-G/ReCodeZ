@@ -14,7 +14,7 @@ import com.recodez.handlers.ParenthesesErrorChecker;
 public class CoreController {
 	@RequestMapping("/check")
 	public String[] check(@RequestParam(value = "code", defaultValue = "") String code) {
-		CodeFile file = new CodeFile(code, true);
+		CodeFile file = new CodeFile(code);
 		CodeFileTraverser fileTraverser = new CodeFileTraverser(file);
 		ErrorChecker parentheses = new ParenthesesErrorChecker();
 		ErrorChecker colons = new ColonErrorChecker();
@@ -23,10 +23,16 @@ public class CoreController {
 
 		fileTraverser.traverse(parentheses);
 
-		String[] messages = new String[ErrorChecker.getMessages().size()];
 		int size = ErrorChecker.getMessages().size();
-		for (int i = 0; i < size; i++) {
-			messages[i] = ErrorChecker.getMessages().remove();
+		String[] messages;
+		if (size == 0) {
+			messages = new String[size];
+		}
+		else {
+			messages = new String[size];
+			for (int i = 0; i < size; i++) {
+				messages[i] = ErrorChecker.getMessages().remove();
+			}
 		}
 
 		return messages;

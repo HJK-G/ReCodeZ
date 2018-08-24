@@ -62,8 +62,7 @@ public class ParenthesesErrorChecker extends ErrorChecker {
 		message += "You have " + numLeftParen + " left parentheses.\n";
 		message += "You have " + numRightParen + " right parentheses.\n";
 		message += "Your parentheses have to be matching.";
-		
-		System.out.println(message);
+
 		messages.add(message);
 
 		return true;
