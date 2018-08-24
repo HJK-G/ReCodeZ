@@ -1,8 +1,5 @@
 package com.recodez.handlers;
 
-import java.io.IOException;
-import java.util.Scanner;
-
 import com.recodez.framework.Block;
 import com.recodez.framework.CodeFile;
 import com.recodez.framework.TerminalOutput;
@@ -22,10 +19,12 @@ public class CodeFileTraverser {
 		Block currBlock = currScope.getBlock(0);
 		for (int pos = 0; currBlock != null; pos++, currBlock = currScope.getBlock(pos)) {
 			String line = currBlock.getLine();
+			System.out.println(line);
 			TerminalOutput terminalOutput = TerminalOutput.getTerminalOutput(line);
 			if (terminalOutput.getText() == null) {
 				continue;
 			}
+			System.out.println(terminalOutput.getText());
 
 			errorChecker.checkError(currScope, terminalOutput);
 
@@ -33,38 +32,5 @@ public class CodeFileTraverser {
 				checkForErrors(errorChecker, currBlock);
 			}
 		}
-	}
-
-	private static TerminalOutput getTerminalOutput(String code) {
-		String[] command = { "python",
-				"/Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/Compile.py", code };
-		Scanner terminalOutput = new Scanner(executeCommand(command).getErrorStream());
-
-		if (!terminalOutput.hasNext()) {
-			terminalOutput.close();
-			return null;
-		}
-
-		terminalOutput.nextLine();
-		terminalOutput.nextLine();
-		terminalOutput.nextLine();
-		terminalOutput.nextLine();
-		String text = terminalOutput.nextLine();
-		String errorLoc = terminalOutput.nextLine();
-		String errorMsg = terminalOutput.nextLine();
-
-		terminalOutput.close();
-		return new TerminalOutput(text, errorLoc, errorMsg);
-	}
-
-	private static Process executeCommand(String[] command) {
-		try {
-			return Runtime.getRuntime().exec(command);
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return null;
 	}
 }

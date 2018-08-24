@@ -21,8 +21,8 @@ public class Tester {
 
 		fileTraverser.traverse(parentheses);
 
-		String message = ErrorChecker.getMessages().peek();
-
-		System.out.println(message);
+		for (String msg : ErrorChecker.getMessages()) {
+			System.out.println(msg);
+		}
 	}
 }

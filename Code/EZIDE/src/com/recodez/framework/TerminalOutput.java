@@ -1,7 +1,6 @@
 package com.recodez.framework;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TerminalOutput {
@@ -76,6 +75,7 @@ public class TerminalOutput {
 		errorOutput.nextLine();
 		errorOutput.nextLine();
 		errorOutput.nextLine();
+		errorOutput.nextLine();
 		String text = errorOutput.nextLine();
 		String errorLoc = errorOutput.nextLine();
 		String errorMsg = errorOutput.nextLine();
@@ -97,13 +97,9 @@ public class TerminalOutput {
 		output.nextLine();
 
 		String userOutput = "";
-		String line = output.nextLine();
-
-		userOutput += line + "\n";
 
 		while (output.hasNext()) {
-			userOutput += line + "\n";
-			line = output.nextLine();
+			userOutput += output.nextLine() + "\n";
 		}
 
 		output.close();
