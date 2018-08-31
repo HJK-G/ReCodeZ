@@ -39,7 +39,6 @@ public class TerminalOutput {
 		String[] command = { "python",
 				"/Users/JustinKim/Documents/workspace/EZIDE/upgraded-waffle/Code/EZIDE/PythonCode/CompileAndRun.py",
 				code };
-		System.out.println(code);
 		Process res = executeCommand(command);
 		Scanner compileOutput = new Scanner(res.getInputStream());
 		Scanner errorOutput = new Scanner(res.getErrorStream());
@@ -81,8 +80,6 @@ public class TerminalOutput {
 		String errorLoc = errorOutput.nextLine();
 		String errorMsg = errorOutput.nextLine();
 
-		System.out.println("AD");
-
 		errorOutput.close();
 		return new TerminalOutput(text, errorLoc, errorMsg);
 	}
@@ -92,8 +89,6 @@ public class TerminalOutput {
 		while (output.hasNext()) {
 			line = output.nextLine();
 		}
-
-		System.out.println("ASFD");
 
 		return new TerminalOutput("file", "somewhere", line);
 	}
@@ -106,8 +101,6 @@ public class TerminalOutput {
 		while (output.hasNext()) {
 			userOutput += output.nextLine() + "\n";
 		}
-
-		System.out.println("ASD");
 
 		output.close();
 		return new TerminalOutput(userOutput);

@@ -2,7 +2,6 @@ package com.recodez.handlers;
 
 import java.util.HashSet;
 
-import com.recodez.framework.Block;
 import com.recodez.framework.TerminalOutput;
 
 public class ColonErrorChecker extends ErrorChecker {
@@ -14,7 +13,7 @@ public class ColonErrorChecker extends ErrorChecker {
 	}
 
 	@Override
-	public boolean handleWithThis(Block currScope, TerminalOutput terminalOutput) {
+	public String handleWithThis(TerminalOutput terminalOutput) {
 		String text = terminalOutput.getText().trim();
 
 		String message = "You have a missing colon.\n";
@@ -29,13 +28,12 @@ public class ColonErrorChecker extends ErrorChecker {
 		}
 
 		if (!isError)
-			return false;
+			return "";
 
 		message += "Did you mean: \n";
 		message += text;
-		messages.add(message);
 
-		return true;
+		return message;
 	}
 
 	private void setKeywords() {

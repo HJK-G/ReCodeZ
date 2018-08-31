@@ -1,31 +1,26 @@
 package com.recodez.handlers;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
-import com.recodez.framework.Block;
 import com.recodez.framework.TerminalOutput;
 
 public abstract class ErrorChecker {
 	protected ErrorChecker successor;
-	protected static Queue<String> messages = new LinkedList<>();
 
-	public void checkError(Block currScope, TerminalOutput terminalOutput) {
-		if (!handleWithThis(currScope, terminalOutput)) {
+	public String checkError(TerminalOutput terminalOutput) {
+		String resThisCheck = handleWithThis(terminalOutput);
+
+		if (resThisCheck.equals("")) {
 			if (successor != null) {
-				successor.checkError(currScope, terminalOutput);
+				return successor.checkError(terminalOutput);
 			}
 		}
+
+		return resThisCheck;
 	}
 
-	public abstract boolean handleWithThis(Block currScope, TerminalOutput terminalOutput);
+	public abstract String handleWithThis(TerminalOutput terminalOutput);
 
 	public void setSuccessor(ErrorChecker successor) {
 		this.successor = successor;
-	}
-
-	public static Queue<String> getMessages() {
-		return messages;
 	}
 
 }

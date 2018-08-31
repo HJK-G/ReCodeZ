@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.recodez.framework.CodeFile;
-import com.recodez.handlers.CodeFileTraverser;
+import com.recodez.handlers.Executor;
 import com.recodez.handlers.ColonErrorChecker;
 import com.recodez.handlers.ErrorChecker;
 import com.recodez.handlers.ParenthesesErrorChecker;
@@ -28,7 +28,7 @@ public class ErrorCheckerTest {
 		for (int i = 0; i < output.length; i++) {
 			String filePath = System.getProperty("user.dir") + output[i];
 			CodeFile file = new CodeFile(IOUtils.toString(new FileInputStream(new File(filePath))));
-			CodeFileTraverser fileTraverser = new CodeFileTraverser(file);
+			Executor fileTraverser = new Executor(file);
 			ErrorChecker parentheses = new ParenthesesErrorChecker();
 			ErrorChecker colons = new ColonErrorChecker();
 
