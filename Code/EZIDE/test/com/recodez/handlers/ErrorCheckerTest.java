@@ -28,13 +28,13 @@ public class ErrorCheckerTest {
 		for (int i = 0; i < output.length; i++) {
 			String filePath = System.getProperty("user.dir") + output[i];
 			CodeFile file = new CodeFile(IOUtils.toString(new FileInputStream(new File(filePath))));
-			Executor fileTraverser = new Executor(file);
+//			Executor fileTraverser = new Executor(file);
 			ErrorChecker parentheses = new ParenthesesErrorChecker();
 			ErrorChecker colons = new ColonErrorChecker();
 
 			parentheses.setSuccessor(colons);
 
-			fileTraverser.traverse(parentheses);
+//			fileTraverser.traverse(parentheses);
 
 			Queue<String> messages = ErrorChecker.getMessages();
 			String message = messages.remove();

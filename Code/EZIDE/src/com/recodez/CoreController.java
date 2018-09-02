@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.recodez.framework.CodeFile;
-import com.recodez.handlers.Executor;
+import com.recodez.handlers.CodeFileTraverser;
 import com.recodez.handlers.ColonErrorChecker;
 import com.recodez.handlers.ErrorChecker;
 import com.recodez.handlers.ParenthesesErrorChecker;
@@ -15,7 +15,7 @@ public class CoreController {
 	@RequestMapping("/check")
 	public String[] check(@RequestParam(value = "code", defaultValue = "") String code) {
 		CodeFile file = new CodeFile(code);
-		Executor fileTraverser = new Executor(file);
+		CodeFileTraverser fileTraverser = new CodeFileTraverser(file);
 		ErrorChecker parentheses = new ParenthesesErrorChecker();
 		ErrorChecker colons = new ColonErrorChecker();
 

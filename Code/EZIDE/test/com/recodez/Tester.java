@@ -23,6 +23,6 @@ public class Tester {
 
 		parentheses.setSuccessor(colons);
 		
-		String error=parentheses.checkError();
+//		String error=parentheses.checkError();
 	}
 }

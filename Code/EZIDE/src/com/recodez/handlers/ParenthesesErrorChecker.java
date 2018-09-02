@@ -1,11 +1,12 @@
 package com.recodez.handlers;
 
+import com.recodez.framework.Block;
 import com.recodez.framework.TerminalOutput;
 
 public class ParenthesesErrorChecker extends ErrorChecker {
 
 	@Override
-	public String handleWithThis(TerminalOutput terminalOutput) {
+	public boolean handleWithThis(Block currScope, TerminalOutput terminalOutput) {
 		String text = terminalOutput.getText().trim();
 
 		boolean isError = false;
@@ -29,7 +30,7 @@ public class ParenthesesErrorChecker extends ErrorChecker {
 		}
 
 		if (!isError) {
-			return "";
+			return false;
 		}
 
 		String message = "You have unmatched parentheses. \nYour code was: \n";
@@ -62,7 +63,9 @@ public class ParenthesesErrorChecker extends ErrorChecker {
 		message += "You have " + numRightParen + " right parentheses.\n";
 		message += "Your parentheses have to be matching.";
 
-		return message;
+		messages.add(message);
+
+		return true;
 	}
 
 }
