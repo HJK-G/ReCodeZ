@@ -15,12 +15,7 @@ public class Executor {
 	}
 
 	private Result checkForErrors(ErrorChecker errorChecker, String code) {
-		String formattedFile = "";
-		String errorMessage = "";
-
 		TerminalOutput output = TerminalOutput.getTerminalOutput(code);
-		
-		
 
 		return new Result();
 	}
