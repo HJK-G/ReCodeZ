@@ -11,14 +11,19 @@ public abstract class ErrorChecker {
 	protected static Queue<String> messages = new LinkedList<>();
 
 	public void checkError(Block currScope, TerminalOutput terminalOutput) {
-		if (!handleWithThis(currScope, terminalOutput)) {
+		if (!doesHandleWithThis(currScope, terminalOutput)) {
 			if (successor != null) {
 				successor.checkError(currScope, terminalOutput);
 			}
 		}
+		else {
+			messages.add(getErrorMessage(currScope, terminalOutput));
+		}
 	}
 
-	public abstract boolean handleWithThis(Block currScope, TerminalOutput terminalOutput);
+	public abstract boolean doesHandleWithThis(Block currScope, TerminalOutput terminalOutput);
+
+	public abstract String getErrorMessage(Block currScope, TerminalOutput terminalOutput);
 
 	public void setSuccessor(ErrorChecker successor) {
 		this.successor = successor;

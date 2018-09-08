@@ -7,8 +7,6 @@ import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
 
-import com.recodez.framework.Result;
-import com.recodez.framework.TerminalOutput;
 import com.recodez.framework.CodeFile;
 import com.recodez.handlers.ColonErrorChecker;
 import com.recodez.handlers.ErrorChecker;
@@ -25,7 +23,7 @@ public class Tester {
 		parentheses.setSuccessor(colons);
 
 		// String error=parentheses.checkError();
-		TerminalOutput.getTerminalOutput("print(1)");
+		// TerminalOutput.getTerminalOutput("print(1)");
 
 	}
 }

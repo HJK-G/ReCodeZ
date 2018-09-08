@@ -14,28 +14,27 @@ public class ColonErrorChecker extends ErrorChecker {
 	}
 
 	@Override
-	public boolean handleWithThis(Block currScope, TerminalOutput terminalOutput) {
+	public boolean doesHandleWithThis(Block currScope, TerminalOutput terminalOutput) {
+		String text = terminalOutput.getText().trim();
+
+		return !text.endsWith(":");
+	}
+
+	@Override
+	public String getErrorMessage(Block currScope, TerminalOutput terminalOutput) {
 		String text = terminalOutput.getText().trim();
 
 		String message = "You have a missing colon.\n";
-		boolean isError = false;
 		for (String keyword : keywords) {
 			if (text.startsWith(keyword)) {
-				if (!text.endsWith(":")) {
-					text += ":";
-					isError = true;
-				}
+				text += ":";
 			}
 		}
 
-		if (!isError)
-			return false;
-
 		message += "Did you mean: \n";
 		message += text;
-		messages.add(message);
 
-		return true;
+		return message;
 	}
 
 	private void setKeywords() {

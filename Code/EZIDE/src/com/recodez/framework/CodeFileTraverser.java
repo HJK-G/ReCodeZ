@@ -1,8 +1,6 @@
-package com.recodez.handlers;
+package com.recodez.framework;
 
-import com.recodez.framework.Block;
-import com.recodez.framework.CodeFile;
-import com.recodez.framework.TerminalOutput;
+import com.recodez.handlers.ErrorChecker;
 
 public class CodeFileTraverser {
 	CodeFile file;
@@ -20,7 +18,8 @@ public class CodeFileTraverser {
 		for (int pos = 0; currBlock != null; pos++, currBlock = currScope.getBlock(pos)) {
 			String line = currBlock.getLine();
 
-			TerminalOutput terminalOutput = TerminalOutput.getTerminalOutput(line);
+			TerminalAccess terminal = new TerminalAccess();
+			TerminalOutput terminalOutput = terminal.getTerminalOutput(line);
 			if (terminalOutput.getText() == null) {
 				continue;
 			}

@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.recodez.framework.CodeFile;
-import com.recodez.handlers.Executor;
+import com.recodez.framework.Executor;
 import com.recodez.handlers.ColonErrorChecker;
 import com.recodez.handlers.ErrorChecker;
 import com.recodez.handlers.ParenthesesErrorChecker;
