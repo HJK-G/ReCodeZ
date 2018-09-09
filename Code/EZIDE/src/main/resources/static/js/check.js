@@ -1,6 +1,7 @@
 function check() {
     var code = $('#code').val();
     $('#errors').html('<p id="errorIdentifier"></p>')
+    $('#output').html('<p id="outputIdentifier"></p>')
 
     $.ajax(
         {
