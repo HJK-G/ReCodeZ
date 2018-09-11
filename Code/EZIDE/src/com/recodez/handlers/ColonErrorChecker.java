@@ -17,7 +17,13 @@ public class ColonErrorChecker extends ErrorChecker {
 	public boolean doesHandleWithThis(Block currScope, TerminalOutput terminalOutput) {
 		String text = terminalOutput.getText().trim();
 
-		return !text.endsWith(":");
+		for (String keyword : keywords) {
+			if (text.startsWith(keyword)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -25,11 +31,8 @@ public class ColonErrorChecker extends ErrorChecker {
 		String text = terminalOutput.getText().trim();
 
 		String message = "You have a missing colon.\n";
-		for (String keyword : keywords) {
-			if (text.startsWith(keyword)) {
-				text += ":";
-			}
-		}
+
+		text += ":";
 
 		message += "Did you mean: \n";
 		message += text;
