@@ -3,6 +3,7 @@ package com.recodez.framework;
 import com.recodez.handlers.ColonErrorChecker;
 import com.recodez.handlers.ErrorChecker;
 import com.recodez.handlers.ParenthesesErrorChecker;
+import com.recodez.handlers.VariableNameErrorChecker;
 
 public class Executor {
 	CodeFile file;
@@ -29,8 +30,10 @@ public class Executor {
 		CodeFileTraverser fileTraverser = new CodeFileTraverser(file);
 		ErrorChecker parentheses = new ParenthesesErrorChecker();
 		ErrorChecker colons = new ColonErrorChecker();
+		ErrorChecker varName = new VariableNameErrorChecker();
 
 		parentheses.setSuccessor(colons);
+		colons.setSuccessor(varName);
 
 		fileTraverser.traverse(parentheses);
 

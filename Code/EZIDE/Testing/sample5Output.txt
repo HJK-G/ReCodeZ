@@ -1,8 +1,0 @@
-You have unmatched parentheses. 
-Your code was: 
-print("Name: " + name + " Age: " + str(age)))
-     ^                                ^      
-                                          ^^^
-You have 2 left parentheses.
-You have 3 right parentheses.
-Your parentheses have to be matching.

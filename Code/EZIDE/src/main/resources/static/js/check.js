@@ -16,7 +16,7 @@ function check() {
                 	$('<pre class="tab text-success">' + result[1] + '<pre>').insertBefore("#outputIdentifier");
                 }
                 else {
-	               	for (i = 0; i < result.length && result[i] != null; i++) {
+	            	for (i = 0; i < result.length && result[i] != null; i++) {
 	                    $('<pre class="tab text-danger">' + result[i] + '<pre>').insertBefore("#errorIdentifier");
 	                }
 				}

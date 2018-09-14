@@ -1,3 +1,0 @@
-You have a missing colon.
-Did you mean: 
-def a():
