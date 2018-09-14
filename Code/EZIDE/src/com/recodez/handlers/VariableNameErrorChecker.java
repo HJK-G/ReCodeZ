@@ -7,7 +7,7 @@ public class VariableNameErrorChecker extends ErrorChecker {
 
 	@Override
 	public boolean doesHandleWithThis(Block currScope, TerminalOutput terminalOutput) {
-		return terminalOutput.getErrorMsg().startsWith("NameError:	");
+		return terminalOutput.getErrorMsg().startsWith("NameError:");
 	}
 
 	@Override
@@ -17,7 +17,7 @@ public class VariableNameErrorChecker extends ErrorChecker {
 		String message = "You have an undefined variable.\n";
 		message += "The variable was: ";
 		message += variable;
-		message += "\n You cannot use a variable without first defining it.";
+		message += "\nYou cannot use a variable without first defining it.";
 
 		return message;
 	}

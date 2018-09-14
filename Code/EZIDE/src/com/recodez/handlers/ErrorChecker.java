@@ -11,6 +11,7 @@ public abstract class ErrorChecker {
 	protected static Queue<String> messages = new LinkedList<>();
 
 	public void checkError(Block currScope, TerminalOutput terminalOutput) {
+		System.out.println(this.getClass().getName());
 		if (!doesHandleWithThis(currScope, terminalOutput)) {
 			if (successor != null) {
 				successor.checkError(currScope, terminalOutput);
