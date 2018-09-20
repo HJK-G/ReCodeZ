@@ -1,5 +1,6 @@
 function check() {
     var code = $('#code').val();
+    var inupt = $('#input').val();
     $('#errors').html('<p id="errorIdentifier"></p>')
     $('#output').html('<p id="outputIdentifier"></p>')
 
@@ -9,6 +10,7 @@ function check() {
             url: "/check",
             data: {
                 "code": code
+                "input": input
             },
             success: function (result) {
                 console.log(result);

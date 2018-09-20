@@ -24,6 +24,7 @@ public class Tester {
 
 		// String error=parentheses.checkError();
 		// TerminalOutput.getTerminalOutput("print(1)");
+		System.out.println("ASD");
 
 	}
 }
