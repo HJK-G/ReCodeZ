@@ -19,7 +19,7 @@ public class CodeFileTraverser {
 			String line = currBlock.getLine();
 
 			TerminalAccess terminal = new TerminalAccess();
-			TerminalOutput terminalOutput = terminal.getTerminalOutput(line);
+			TerminalOutput terminalOutput = terminal.getTerminalOutput(line, "");
 			if (terminalOutput.getText() == null) {
 				continue;
 			}

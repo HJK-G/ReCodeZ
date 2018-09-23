@@ -9,7 +9,7 @@ function check() {
             type: "GET",
             url: "/check",
             data: {
-                "code": code
+                "code": code,
                 "input": input
             },
             success: function (result) {
