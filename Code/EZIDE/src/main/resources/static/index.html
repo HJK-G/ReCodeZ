@@ -22,6 +22,9 @@
     
     <!-- Error Checking Script-->
     <script src="/js/check.js"></script>
+    
+    <!-- Miscellaneous Script-->
+    <script src="/js/misc.js"></script>
 
   </head>
 
@@ -79,11 +82,11 @@
             <div class="alert alert-dark" role="alert">
                 <h3>Code:</h3>
                 <hr>
-                <textarea class="form-control" rows="5" id="code"></textarea>
+                <textarea class="form-control" rows="5" id="code" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
                 
                 <h3>Input:</h3>
                 <hr>
-                <textarea class="form-control" rows="5" id="input"></textarea>
+                <textarea class="form-control" rows="5" id="input" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
                 
                 <button type="button" class="btn btn-primary" onclick="check()">Run</button>
             </div>

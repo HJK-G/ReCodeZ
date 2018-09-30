@@ -18,8 +18,9 @@ public class TerminalAccess {
 
 		try {
 			inputWriter.write(input);
+			inputWriter.flush();
 			res.waitFor(10, TimeUnit.SECONDS);
-			res.destroyForcibly();
+			System.out.println("ASDF");
 		}
 		catch (IOException | InterruptedException e) {
 			e.printStackTrace();

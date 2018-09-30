@@ -1,6 +1,6 @@
 function check() {
     var code = $('#code').val();
-    var inupt = $('#input').val();
+    var input = $('#input').val();
     $('#errors').html('<p id="errorIdentifier"></p>')
     $('#output').html('<p id="outputIdentifier"></p>')
 
