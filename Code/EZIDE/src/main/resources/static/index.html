@@ -68,7 +68,7 @@
         <div class="row">
           <div class="col-lg-8 mx-auto">
             <h2 class="text-white mb-4">Built on a better error engine.</h2>
-            <p class="text-white-50">ReCodeZ allows you to compile, run, and test your Python program. It gives you helpful tips to fix your code when something goes wrong.</p>
+            <p class="text-white-50">ReCodeZ allows you to compile, run, and test your program. It gives you helpful tips to fix your code when something goes wrong.</p>
           </div>
         </div>
       </div>
@@ -83,10 +83,6 @@
                 <h3>Code:</h3>
                 <hr>
                 <textarea class="form-control" rows="5" id="code" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
-                
-                <h3>Input:</h3>
-                <hr>
-                <textarea class="form-control" rows="5" id="input" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
                 
                 <button type="button" class="btn btn-primary" onclick="check()">Run</button>
             </div>
