@@ -83,6 +83,9 @@
                 <h3>Code:</h3>
                 <hr>
                 <textarea class="form-control" rows="5" id="code" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
+                <h4>Input:</h4>
+                <hr>
+                <textarea class="form-control" rows="5" id="input" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
                 
                 <button type="button" class="btn btn-primary" onclick="check()">Run</button>
             </div>

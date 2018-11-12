@@ -16,7 +16,7 @@ public class CoreController {
 	public String[] check(@RequestParam Map<String, String> queryMap) {
 		String code = queryMap.get("code");
 		String input = queryMap.get("input");
-		input = "";									//asdf/asdf
+//		input = "";									//asdf/asdf
 		System.out.println(code + " " + input);
 		CodeFile file = new CodeFile(code);
 		Executor executor = new Executor(file, input);

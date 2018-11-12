@@ -10,21 +10,21 @@ public class TerminalAccess {
 
 	public TerminalOutput getTerminalOutput(String code, String input) {
 		String compilePath = System.getProperty("user.dir") + "/PythonCode/CompileAndRun.py";
-		String[] command = { "python", compilePath, code };
+		String[] command = { "echo", input, "|", "python", compilePath, code };
 		Process res = executeCommand(command);
 		Scanner compileOutput = new Scanner(res.getInputStream());
 		Scanner errorOutput = new Scanner(res.getErrorStream());
 		BufferedWriter inputWriter = new BufferedWriter(new OutputStreamWriter(res.getOutputStream()));
 
-		try {
-			inputWriter.write(input);
-			inputWriter.flush();
-			res.waitFor(10, TimeUnit.SECONDS);
-			System.out.println("ASDF");
-		}
-		catch (IOException | InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			inputWriter.write(input);
+//			inputWriter.flush();
+//			res.waitFor(10, TimeUnit.SECONDS);
+//			System.out.println("ASDF");
+//		}
+//		catch (IOException | InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
 		// compile error
 		if (!compileOutput.hasNext()) {
