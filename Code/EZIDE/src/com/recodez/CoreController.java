@@ -13,13 +13,11 @@ import com.recodez.framework.Result;
 @RestController
 public class CoreController {
 	@RequestMapping("/check")
-	public String[] check(@RequestParam Map<String, String> queryMap) {
-		String code = queryMap.get("code");
-		String input = queryMap.get("input");
-//		input = "";									//asdf/asdf
-		System.out.println(code + " " + input);
+	public String[] check(@RequestParam String code) {
+
+		System.out.println(code);
 		CodeFile file = new CodeFile(code);
-		Executor executor = new Executor(file, input);
+		Executor executor = new Executor(file);
 
 		Result result = executor.execute();
 

@@ -25,6 +25,7 @@
     
     <!-- Miscellaneous Script-->
     <script src="/js/misc.js"></script>
+    <script src="/ace-builds/src-min-noconflict/ace.js" type="text/java" charset="utf-8"></script>
 
   </head>
 
@@ -78,30 +79,11 @@
     <section id="program" class="projects-section bg-light">
       <div class="container">
         <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
-          <div class="col-lg-6">
-            <div class="alert alert-dark" role="alert">
-                <h3>Code:</h3>
-                <hr>
-                <textarea class="form-control" rows="5" id="code" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
-                <h4>Input:</h4>
-                <hr>
-                <textarea class="form-control" rows="5" id="input" onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
-                
-                <button type="button" class="btn btn-primary" onclick="check()">Run</button>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="alert alert-dark" role="alert" id="results">
-                <h3>Results:</h3>
-                <hr>
-                <div id="errors">
-                    <p id="errorIdentifier"></p>
-                </div>
-                <div id="output">
-                	<p id="outputIdentifier"></p>
-                </div>
-            </div>
-          </div>
+		  <script>
+		   var editor = ace.edit("editor");
+		   editor.setTheme("ace/theme/monokai");
+		   editor.session.setMode("ace/mode/javascript");
+		  </script>	
         </div>
       </div>
     </section>

@@ -1,0 +1,21 @@
+{application, glot, [
+  {description, "glot - Code Runner API"},
+  {vsn, "1.2.1"},
+  {registered, []},
+  {applications, [
+    kernel,
+    stdlib,
+    crypto,
+    compiler,
+    syntax_tools,
+    goldrush,
+    lager,
+    cowboy,
+    jsx,
+    hackney,
+    iso8601,
+    uuid
+  ]},
+  {mod, { glot_app, []}},
+  {env, []}
+]}.

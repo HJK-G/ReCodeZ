@@ -1,32 +1,43 @@
 package com.recodez.framework;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class TerminalAccess {
 
-	public TerminalOutput getTerminalOutput(String code, String input) {
+	public TerminalOutput getTerminalOutput(String code) {
 		String compilePath = System.getProperty("user.dir") + "/PythonCode/CompileAndRun.py";
-		String[] command = { "echo", input, "|", "python", compilePath, code };
-		Process res = executeCommand(command);
-		Scanner compileOutput = new Scanner(res.getInputStream());
-		Scanner errorOutput = new Scanner(res.getErrorStream());
-		BufferedWriter inputWriter = new BufferedWriter(new OutputStreamWriter(res.getOutputStream()));
+		String[] command = { "python", compilePath, code };
+		ProcessBuilder builder = new ProcessBuilder("/bin/bash");
+		builder.redirectErrorStream(true);
+		Process process = builder.start();
 
-//		try {
-//			inputWriter.write(input);
-//			inputWriter.flush();
-//			res.waitFor(10, TimeUnit.SECONDS);
-//			System.out.println("ASDF");
-//		}
-//		catch (IOException | InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
 
-		// compile error
+		while (scan.hasNext()) {
+			String input = scan.nextLine();
+			if (input.trim().equals("exit")) {
+				writer.write("exit\n");
+			}
+			else {
+				writer.write("((" + input + ") && echo --EOF--) || echo --EOF--\n");
+			}
+			writer.flush();
+
+			line = reader.readLine();
+			while (line != null && !line.trim().equals("--EOF--")) {
+				System.out.println("Stdout: " + line);
+				line = reader.readLine();
+			}
+			if (line == null) {
+				break;
+			}
+		}
 		if (!compileOutput.hasNext()) {
 			compileOutput.close();
 			return getCompileErrorOutput(errorOutput);
@@ -41,17 +52,6 @@ public class TerminalAccess {
 		// no error
 		errorOutput.close();
 		return getExecutedOutput(compileOutput);
-	}
-
-	private Process executeCommand(String[] command) {
-		try {
-			return Runtime.getRuntime().exec(command);
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return null;
 	}
 
 	private TerminalOutput getCompileErrorOutput(Scanner errorOutput) {

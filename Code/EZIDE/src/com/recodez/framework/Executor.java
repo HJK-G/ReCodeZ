@@ -8,12 +8,10 @@ import com.recodez.handlers.VariableNameErrorChecker;
 public class Executor {
 	CodeFile file;
 	String line;
-	String input;
 
-	public Executor(CodeFile file, String input) {
+	public Executor(CodeFile file) {
 		this.file = file;
 		this.line = file.getFileString();
-		this.input = input;
 	}
 
 	public Result execute() {
@@ -22,7 +20,7 @@ public class Executor {
 
 	private Result checkForErrors(String code) {
 		TerminalAccess terminal = new TerminalAccess();
-		TerminalOutput overallOutput = terminal.getTerminalOutput(code, input);
+		TerminalOutput overallOutput = terminal.getTerminalOutput(code);
 
 		// executed
 		if (overallOutput.getOutput() != null) {

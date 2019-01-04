@@ -1,6 +1,5 @@
 function check() {
     var code = $('#code').val();
-    var input = $('#input').val();
     $('#errors').html('<p id="errorIdentifier"></p>')
     $('#output').html('<p id="outputIdentifier"></p>')
 
@@ -9,19 +8,13 @@ function check() {
             type: "GET",
             url: "/check",
             data: {
-                "code": code,
-                "input": input
+                "code": code
             },
             success: function (result) {
                 console.log(result);
-                if (result[0] === "0") {
-                	$('<pre class="tab text-success">' + result[1] + '<pre>').insertBefore("#outputIdentifier");
+            	for (i = 0; i < result.length && result[i] != null; i++) {
+                    document.getElementById("output").value = '<pre class="tab">' + result[i] + '<pre>';
                 }
-                else {
-	            	for (i = 0; i < result.length && result[i] != null; i++) {
-	                    $('<pre class="tab text-danger">' + result[i] + '<pre>').insertBefore("#errorIdentifier");
-	                }
-				}
             },
             error: function (jqXHR, exception) {
                 alert("Failed");
