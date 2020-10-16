@@ -7,4 +7,4 @@ compiled = compile(code, '<string>', 'exec')
 
 print("No compile error.")
 
-exec(compiled)
+exec compiled
