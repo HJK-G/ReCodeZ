@@ -74,7 +74,7 @@
   <!-- Programming Section -->
   <section id="program" class="projects-section bg-light">
     <div class="container">
-      <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+      <div class="row justify-content-center no-gutters mb-5 mb-lg-0 h-80">
         <div style="width: 45%; float: left" id="editor"></div>
         <div style="width: 10%"></div>
         <div style="width: 45%; float: right" id="terminal"></div>
@@ -125,9 +125,7 @@
     });
     term.open(document.getElementById('terminal'));
     term.fit()
-    term.resize(15, 30)
     console.log(`size: ${term.cols} columns, ${term.rows} rows`)
-    term.fit()
     term.write("Write Python code here:\n")
     term.on('key', (key, ev) => {
       console.log("pressed key", key)
@@ -147,11 +145,11 @@
 
     socket.on("connect", () => {
       fitToscreen()
-      //status.innerHTML = '<span style="background-color: lightgreen;">connected</span>'
+      status.innerHTML = '<span style="background-color: lightgreen;">connected</span>'
     })
 
     socket.on("disconnect", () => {
-      //status.innerHTML = '<span style="background-color: #ff8383;">disconnected</span>'
+      status.innerHTML = '<span style="background-color: #ff8383;">disconnected</span>'
     })
 
     function fitToscreen() {
