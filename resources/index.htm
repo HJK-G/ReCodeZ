@@ -80,7 +80,7 @@
         <div style="width: 45%; float: right" id="terminal"></div>
       </div>
       <div class="row no-gutters h-20">
-        <button type="button" class="btn btn-primary" id="submit-code" onclick="check()">Run</button>
+        <button type="button" class="btn btn-primary" id="submit-code" onclick="run()">Run</button>
       </div>
   </section>
 
@@ -103,7 +103,7 @@
   <script src="https://pagecdn.io/lib/ace/1.4.12/ace.js" crossorigin="anonymous" integrity="sha256-Q9hnBpgBFstzZOr+OKFOWZWfcF5nFXO8Qz48Nmndo6U="></script>
 
   <script>
-    var editor = ace.edit("editor");
+    editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
     editor.session.setMode("ace/mode/python");
   </script>
@@ -120,15 +120,15 @@
     Terminal.applyAddon(fit)
     Terminal.applyAddon(webLinks)
     Terminal.applyAddon(search)
-    const term = new Terminal({
+    term = new Terminal({
       cursorBlink: true,
       macOptionIsMeta: true,
-      scrollback: true,
+      scrollback: 100
     });
     term.open(document.getElementById('terminal'));
     term.fit()
     console.log(`size: ${term.cols} columns, ${term.rows} rows`)
-    term.write("Write Python code here:\n")
+    term.write("Your output will appear here:\n")
     term.on('key', (key, ev) => {
       console.log("pressed key", key)
       console.log("event", ev)
@@ -137,7 +137,7 @@
       })
     });
 
-    const socket = io.connect('/pty');
+    socket = io.connect('/pty');
     // const status = document.getElementById("status")
 
     socket.on("pty-output", function(data) {
@@ -147,11 +147,9 @@
 
     socket.on("connect", () => {
       fitToscreen()
-      // status.innerHTML = '<span style="background-color: lightgreen;">connected</span>'
     })
 
     socket.on("disconnect", () => {
-      // status.innerHTML = '<span style="background-color: #ff8383;">disconnected</span>'
     })
 
     function fitToscreen() {
@@ -176,8 +174,8 @@
   </script>
 
   <script>
-    function check() {
-      console.log("button pressed")
+    function run() {
+      socket.emit('pty_input', {'input'=editor.session.GetValue()})
     }
   </script>
 </body>
