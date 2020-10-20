@@ -175,11 +175,13 @@
   <script>
     function run() {
       socket.emit('pty_input', {
-        'input': editor.getSession().getValue()
+        'input': editor.getValue()
       })
-      console.log("hi")
     }
-    document.getElementById('submit-code').addEventListener('click', function() {console.log("hi1"); run();})
+
+    document.getElementById('submit-code').addEventListener('click', function() {
+      run();
+    })
   </script>
 </body>
 
