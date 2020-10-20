@@ -173,14 +173,10 @@
   </script>
 
   <script>
-    function run() {
-      socket.emit('pty_input', {
-        'input': editor.getValue()
-      })
-    }
-
     document.getElementById('submit-code').addEventListener('click', function() {
-      run();
+      socket.emit("pty-input", {
+        "input": editor.getValue()
+      })
     })
   </script>
 </body>
