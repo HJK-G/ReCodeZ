@@ -75,7 +75,7 @@ def connect():
 def main():
     port = 5000
     app.config["cmd"] = ["bash"]
-    print "creating host on port {}".format(port) 
+    print "creating host on port {}".format(port)
     socketio.run(app, debug = False, port = port, host = "0.0.0.0")
 
 if __name__ == "__main__":
