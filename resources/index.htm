@@ -80,7 +80,7 @@
         <div style="width: 45%; float: right" id="terminal"></div>
       </div>
       <div class="row no-gutters h-20">
-        <button type="button" class="btn btn-primary" id="submit-code" onclick="run()">Run</button>
+        <button type="button" class="btn btn-primary" id="submit-code">Run</button>
       </div>
   </section>
 
@@ -149,8 +149,7 @@
       fitToscreen()
     })
 
-    socket.on("disconnect", () => {
-    })
+    socket.on("disconnect", () => {})
 
     function fitToscreen() {
       term.fit()
@@ -175,8 +174,11 @@
 
   <script>
     function run() {
-      socket.emit('pty_input', {'input': editor.session.GetValue()})
+      socket.emit('pty_input', {
+        'input': editor.session.GetValue()
+      })
     }
+    document.getElementById('submit-code').addEventListener('click', run())
   </script>
 </body>
 
