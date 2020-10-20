@@ -177,8 +177,9 @@
       socket.emit('pty_input', {
         'input': editor.getSession().getValue()
       })
+      console.log("hi")
     }
-    document.getElementById('submit-code').addEventListener('click', run())
+    document.getElementById('submit-code').addEventListener('click', function() {console.log("hi1"); run();})
   </script>
 </body>
 
