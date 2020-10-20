@@ -10,7 +10,7 @@ import fcntl
 
 path = './resources'
 app = Flask(__name__, template_folder=path, static_folder=path, static_url_path="")
-app.config["SECRET_KEY"] = "secret!"
+app.config["SECRET_KEY"] = "adsjkflajsoiejlqndvm,ojasdlfanfe"
 app.config["fd"] = None
 app.config["child_pid"] = None
 
