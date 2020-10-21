@@ -39,6 +39,14 @@ def read_and_forward_pty_output():
 def index():
     return render_template("index.htm")
 
+@socketio.on("run-code", namespace = "/pty")
+def run_code(data):
+    if app.config["fd"]:
+        writefilecmd = "echo " + data["input"].encode() + " > tmp1.py"
+        os.write(app.config["fd"], writefilecmd)
+
+        runfilecmd = "python tmp1.py"
+        os.write(app.config["fd"], runfilecmd)
 
 @socketio.on("pty-input", namespace = "/pty")
 def pty_input(data):

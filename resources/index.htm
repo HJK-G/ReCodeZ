@@ -174,6 +174,8 @@
 
   <script>
     document.getElementById('submit-code').addEventListener('click', function() {
+      var code = "python << EOF" + editor.getValue()
+      code += "EOF"
       socket.emit("pty-input", {
         "input": editor.getValue()
       })
