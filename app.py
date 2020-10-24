@@ -44,8 +44,10 @@ def run_code(data):
     if app.config["fd"]:
         writefilecmd = "echo " + data["input"].encode() + " > tmp1.py"
         os.write(app.config["fd"], writefilecmd)
+        print "writing code to file"
 
         runfilecmd = "python tmp1.py"
+        print "running file" 
         os.write(app.config["fd"], runfilecmd)
 
 @socketio.on("pty-input", namespace = "/pty")
