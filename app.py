@@ -89,10 +89,9 @@ def connect():
     else:
         app.config["fd"] = fd
         app.config["child_pid"] = child_pid
-        set_winsize(fd, 50, 50)
         cmd = app.config["cmd"]
         print "child pid is {}".format(child_pid)
-        print "starting background task with command bash to continuosly read and forward pty output to client"
+        print "starting background task with bash to read and forward pty output to client"
 
         socketio.start_background_task(target = read_and_forward_pty_output)
         print("task started")

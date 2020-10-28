@@ -128,7 +128,7 @@
     term.open(document.getElementById('terminal'));
     term.fit()
     console.log(`size: ${term.cols} columns, ${term.rows} rows`)
-    term.write("Your output will appear here:\n")
+    term.write("Your output will appear here:\n\r")
     term.on('key', (key, ev) => {
       console.log("pressed key", key)
       console.log("event", ev)
@@ -141,7 +141,7 @@
     // const status = document.getElementById("status")
 
     socket.on("pty-output", function(data) {
-      console.log("new output", data)
+      console.log("terminal output", data)
       term.write(data.output)
     })
 
@@ -179,16 +179,6 @@
       })
     })
   </script>
-  <!-- <script>
-    document.getElementById('submit-code').addEventListener('click', function() {
-        var code = "python << EOF" + editor.getValue()
-        code += "EOF"
-        socket.emit("pty-input", {
-          "input": editor.getValue()
-        })
-      })
-    </script>
-    -->
 </body>
 
 </html>
