@@ -48,7 +48,7 @@ def run_code(data):
         print "writing code to file"
         os.write(app.config["fd"], writefilecmd)
 
-        runfilecmd = "echo | python tmp1.py \n"
+        runfilecmd = "python tmp1.py \n"
         print "running file"
         os.write(app.config["fd"], runfilecmd)
 
