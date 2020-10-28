@@ -18,9 +18,6 @@ app.config["enabled"] = False
 socketio = SocketIO(app)
 
 
-def runcommand(command):
-    os.write(app.config["fd"], "echo | " + command)
-
 def set_winsize(fd, row, col, xpix=0, ypix=0):
     winsize = struct.pack("HHHH", row, col, xpix, ypix)
     fcntl.ioctl(fd, termios.TIOCSWINSZ, winsize)
@@ -49,11 +46,11 @@ def run_code(data):
         code = data["input"].encode()
         writefilecmd = "echo " + code + " > tmp1.py"
         print "writing code to file"
-        runcommand(writefilecmd)
+        os.system(app.config["fd"], writefilecmd)
 
         runfilecmd = "echo | python tmp1.py"
         print "running file"
-        runcommand(runfilecmd)
+        os.system(app.config["fd"], runfilecmd)
 
         app.config["enabled"] = True
 
