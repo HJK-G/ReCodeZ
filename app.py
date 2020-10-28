@@ -39,7 +39,7 @@ def read_and_forward_pty_output():
             if data_ready:
                 output = os.read(app.config["fd"], max_read_bytes).decode()
                 print output
-                if "[ec2-user@ip-172-26-5-101 recodez]$" == output:
+                if "[ec2-user@ip-172-26-5-101 recodez]$ " == output:
                     output = "[recodez]$\n"
                 socketio.emit("pty-output", {"output": output}, namespace = "/pty")
 
