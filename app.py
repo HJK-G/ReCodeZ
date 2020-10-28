@@ -21,7 +21,8 @@ socketio = SocketIO(app)
 
 def runcommand(command):
     command = json.dumps(command) + '\n'
-    os.write(app.config["fd"], command)
+    os.write(app.config["fd"], command[1:-1])
+
 
 def set_winsize(fd, row, col, xpix=0, ypix=0):
     winsize = struct.pack("HHHH", row, col, xpix, ypix)
@@ -80,7 +81,7 @@ def connect():
         return
 
     (child_pid, fd) = pty.fork()
-    
+
     if child_pid == 0:
         subprocess.call(app.config["cmd"])
     else:
