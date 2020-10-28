@@ -7,6 +7,7 @@ import select
 import termios
 import struct
 import fcntl
+import json
 
 path = './resources'
 app = Flask(__name__, template_folder=path, static_folder=path, static_url_path="")
@@ -17,6 +18,10 @@ app.config["enabled"] = False
 
 socketio = SocketIO(app)
 
+
+def runcommand(command):
+    command = json.dumps(command) + '\n'
+    os.write(app.config["fd"], command)
 
 def set_winsize(fd, row, col, xpix=0, ypix=0):
     winsize = struct.pack("HHHH", row, col, xpix, ypix)
@@ -44,17 +49,14 @@ def index():
 def run_code(data):
     if app.config["fd"]:
         code = data["input"].encode()
-        print code
-        writefilecmd = "echo " + code + " > tmp1.py \n"
 
-        print writefilecmd
-
+        writefilecmd = "echo " + code + " > tmp1.py"
         print "writing code to file"
-        os.write(app.config["fd"], writefilecmd)
+        runcommand(writefilecmd)
 
-        runfilecmd = "python tmp1.py \n"
+        runfilecmd = "python tmp1.py"
         print "running file"
-        os.write(app.config["fd"], runfilecmd)
+        runcommand(runfilecmd)
 
         app.config["enabled"] = True
 
@@ -78,6 +80,7 @@ def connect():
         return
 
     (child_pid, fd) = pty.fork()
+    
     if child_pid == 0:
         subprocess.call(app.config["cmd"])
     else:
