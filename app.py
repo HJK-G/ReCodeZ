@@ -44,6 +44,7 @@ def index():
 def run_code(data):
     if app.config["fd"]:
         code = data["input"].encode()
+        print code
         writefilecmd = "echo " + code + " > tmp1.py \n"
         print "writing code to file"
         os.write(app.config["fd"], writefilecmd)
