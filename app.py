@@ -60,9 +60,9 @@ def run_code(data):
 @socketio.on("pty-input", namespace = "/pty")
 def pty_input(data):
     if app.config["fd"] and app.config["enabled"]:
-        in = data["input"].encode()
-        print code
-        os.write(app.config["fd"], in)
+        ptyin = data["input"].encode()
+        print ptyin
+        os.write(app.config["fd"], ptyin)
 
 
 @socketio.on("resize", namespace = "/pty")
