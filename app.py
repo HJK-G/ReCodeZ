@@ -54,7 +54,7 @@ def run_code(data):
 @socketio.on("pty-input", namespace = "/pty")
 def pty_input(data):
     if app.config["fd"]:
-        print data["input"].encode()
+        print data["input"] #.encode()
         os.write(app.config["fd"], data["input"].encode())
 
 
