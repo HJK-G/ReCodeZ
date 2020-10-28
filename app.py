@@ -13,9 +13,13 @@ app = Flask(__name__, template_folder=path, static_folder=path, static_url_path=
 app.config["SECRET_KEY"] = "adsjkflajsoiejlqndvm,ojasdlfanfe"
 app.config["fd"] = None
 app.config["child_pid"] = None
+app.config["enabled"] = False
 
 socketio = SocketIO(app)
 
+
+def runcommand(command):
+    os.write(app.config["fd"], "echo | " + command)
 
 def set_winsize(fd, row, col, xpix=0, ypix=0):
     winsize = struct.pack("HHHH", row, col, xpix, ypix)
@@ -44,18 +48,21 @@ def run_code(data):
     if app.config["fd"]:
         code = data["input"].encode()
         writefilecmd = "echo " + code + " > tmp1.py"
-        os.write(app.config["fd"], writefilecmd)
         print "writing code to file"
+        runcommand(writefilecmd)
 
-        runfilecmd = "python tmp1.py"
+        runfilecmd = "echo | python tmp1.py"
         print "running file"
-        os.write(app.config["fd"], runfilecmd)
+        runcommand(runfilecmd)
+
+        app.config["enabled"] = True
 
 @socketio.on("pty-input", namespace = "/pty")
 def pty_input(data):
-    if app.config["fd"]:
-        print data["input"] #.encode()
-        os.write(app.config["fd"], data["input"].encode())
+    if app.config["fd"] and app.config["enabled"]:
+        in = data["input"].encode()
+        print code
+        os.write(app.config["fd"], in)
 
 
 @socketio.on("resize", namespace = "/pty")
