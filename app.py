@@ -44,13 +44,13 @@ def index():
 def run_code(data):
     if app.config["fd"]:
         code = data["input"].encode()
-        writefilecmd = "echo " + code + " > tmp1.py"
+        writefilecmd = "echo " + code + " > tmp1.py \n"
         print "writing code to file"
-        os.system(app.config["fd"], writefilecmd)
+        os.write(app.config["fd"], writefilecmd)
 
-        runfilecmd = "echo | python tmp1.py"
+        runfilecmd = "echo | python tmp1.py \n"
         print "running file"
-        os.system(app.config["fd"], runfilecmd)
+        os.write(app.config["fd"], runfilecmd)
 
         app.config["enabled"] = True
 
