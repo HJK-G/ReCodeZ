@@ -20,8 +20,8 @@ socketio = SocketIO(app)
 
 
 def runcommand(command):
-    command = json.dumps(command) + '\n'
-    os.write(app.config["fd"], command[1:-1])
+    command = json.dumps(command)[1:-1] + '\n'
+    os.write(app.config["fd"], command)
 
 
 def set_winsize(fd, row, col, xpix=0, ypix=0):
