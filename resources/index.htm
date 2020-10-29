@@ -173,7 +173,8 @@
   </script>
 
   <script>
-  document.getElementById('submit-code').addEventListener('click', function() {
+    document.getElementById('submit-code').addEventListener('click', function() {
+      term.write("[ReCodeZ]$ python code.py\n\r")
       socket.emit("run-code", {
         "input": editor.getValue()
       })

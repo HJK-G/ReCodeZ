@@ -12,9 +12,10 @@ import json
 path = './resources'
 app = Flask(__name__, template_folder=path, static_folder=path, static_url_path="")
 app.config["SECRET_KEY"] = "adsjkflajsoiejlqndvm,ojasdlfanfe"
+app.config["cmd"] = ["bash"]
 app.config["fd"] = None
 app.config["child_pid"] = None
-app.config["enabled"] = False
+app.config["running"] = False
 
 socketio = SocketIO(app)
 
@@ -22,6 +23,20 @@ socketio = SocketIO(app)
 def runcommand(command):
     command = json.dumps(command)[1:-1] + '\n'
     os.write(app.config["fd"], command)
+
+
+def modifyOutput(output):
+    # all pseudo code
+    if not app.config["running"]:
+        return ""
+
+    # if done: #python exit code or janky way with [ec2-user] output
+    #     app.config["running"] = False
+
+    # if "Error" in output:
+
+
+    return output
 
 
 def set_winsize(fd, row, col, xpix=0, ypix=0):
@@ -39,8 +54,7 @@ def read_and_forward_pty_output():
             if data_ready:
                 output = os.read(app.config["fd"], max_read_bytes).decode()
                 print output
-                if "[ec2-user@ip-172-26-5-101 recodez]$ " == output:
-                    output = "[recodez]$\n"
+                output = modifyOutput(output)
                 socketio.emit("pty-output", {"output": output}, namespace = "/pty")
 
 
@@ -61,11 +75,11 @@ def run_code(data):
         print "running file"
         runcommand(runfilecmd)
 
-        app.config["enabled"] = True
+        app.config["running"] = True
 
 @socketio.on("pty-input", namespace = "/pty")
 def pty_input(data):
-    if app.config["fd"] and app.config["enabled"]:
+    if app.config["fd"] and app.config["running"]:
         ptyin = data["input"].encode()
         print ptyin
         os.write(app.config["fd"], ptyin)
@@ -89,16 +103,15 @@ def connect():
     else:
         app.config["fd"] = fd
         app.config["child_pid"] = child_pid
-        cmd = app.config["cmd"]
+
         print "child pid is {}".format(child_pid)
-        print "starting background task with bash to read and forward pty output to client"
+        print "starting bash task to read and forward pty output to client"
 
         socketio.start_background_task(target = read_and_forward_pty_output)
         print("task started")
 
 def main():
     port = 5000
-    app.config["cmd"] = ["bash"]
     print "creating host on port {}".format(port)
     socketio.run(app, debug = False, port = port, host = "0.0.0.0")
 
