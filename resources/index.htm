@@ -137,7 +137,7 @@
       })
     });
 
-    socket = io.connect('/pty');
+    socket = io.connect('/pty', {transports: ['websocket']});
     // const status = document.getElementById("status")
 
     socket.on("pty-output", function(data) {
