@@ -7,7 +7,7 @@ import select
 import termios
 import struct
 import fcntl
-import pymongo
+# import pymongo
 import json
 
 path = './resources'
