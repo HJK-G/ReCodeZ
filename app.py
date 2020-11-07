@@ -24,23 +24,28 @@ socketio = SocketIO(app)
 
 
 def runcommand(command):
-    command = json.dumps(command)[1:-1] + '\n'
-    os.write(app.config["fd"], command)
+    cmd = ""
+    last = 0
+    for i in range(len(command)):
+        if command[i] == '"':
+            cmd += command[last:i]+"'"
+    cmd += '\n'
+
+    os.write(app.config["fd"], cmd)
 
 
 def modifyOutput(output):
-    # all pseudo code
     if not app.config["running"]:
         return ""
 
-    # if "python tmp1.py" in output:
-    #     return ""
-    #
-    # print output
+    # catch syntax errors
+    if output[:5] == "echo " and output[-50:] == "[ec2-user@ip-172-26-5-101 recodez]$ python tmp1.py":
+        return ""
 
-    # if "[ec2-user@ip-172-26-5-101 recodez]$" in output:
-    #     app.config["running"] = False
-    #     return ""
+    # stop running
+    if output[-36:] == "[ec2-user@ip-172-26-5-101 recodez]$ ":
+        app.config["running"] = False
+        return output[:-36]
 
     return output
 
@@ -59,7 +64,6 @@ def read_and_forward_pty_output():
             (data_ready, _, _) = select.select([app.config["fd"]], [], [], timeout_sec)
             if data_ready:
                 output = os.read(app.config["fd"], max_read_bytes).decode()
-                print output
                 output = modifyOutput(output)
                 socketio.emit("pty-output", {"output": output}, namespace = "/pty")
 
