@@ -22,28 +22,26 @@ app.config["running"] = False
 
 socketio = SocketIO(app)
 
-
-def runcommand(command):
-    cmd = ""
+def escapeCode(code):
+    escode = ""
     last = 0
-    for i in range(len(command)):
-        if command[i] == '"':
-            cmd += command[last:i]+"'"
+    for i in range(len(code)):
+        if code[i] == '"':
+            escode += code[last:i]+"'"
             last = i+1
-        if command[i] == '\n':
-            cmd += command[last:i]+"\\n"
-            last = i+1
-    cmd += command[last:]+'\n'
-    socketio.emit("pty-output", {"cmd": cmd}, namespace = "/pty")
-    os.write(app.config["fd"], cmd)
 
+        if code[i] == '\n':
+            escode += code[last:i]+"\\n"
+            last = i+1
+    escode += code[last:]+'\n'
+    return escode
 
 def modifyOutput(output):
     if not app.config["running"]:
         return ""
 
     # catch syntax errors
-    if output[:5] == "echo " and output[-50:] == "[ec2-user@ip-172-26-5-101 recodez]$ python tmp1.py":
+    if output[:7] == "printf " and output[-52:] == "[ec2-user@ip-172-26-5-101 recodez]$ python tmp1. py\n":
         return ""
 
     # stop running
@@ -81,15 +79,18 @@ def run_code(data):
     if app.config["fd"]:
         code = data["input"].encode()
 
-        writefilecmd = "echo " + code + " > tmp1.py"
+        app.config["running"] = True
+
+        code = escapeCode(code)
+        writefilecmd = "printf \"" + code + "\" > tmp1.py"
         print "writing code to file"
-        runcommand(writefilecmd)
+        # socketio.emit("pty-output", {"running file": writefilecmd}, namespace = "/pty")
+        os.write(app.config["fd"], writefilecmd)
 
         runfilecmd = "python tmp1.py"
         print "running file"
-        runcommand(runfilecmd)
-
-        app.config["running"] = True
+        # socketio.emit("pty-output", {"running file": runfilecmd}, namespace = "/pty")
+        os.write(app.config["fd"], runfilecmd)
 
 @socketio.on("pty-input", namespace = "/pty")
 def pty_input(data):
