@@ -41,7 +41,7 @@ def modifyOutput(output):
         return ""
 
     # catch syntax errors
-    if output[:7] == "printf " and output[-53:] == "[ec2-user@ip-172-26-5-101 recodez]$ python tmp1.\npy\n":
+    if output[:7] == "printf " and output[-53:-6] == "[ec2-user@ip-172-26-5-101 recodez]$ python tmp":
         return ""
 
     # stop running
