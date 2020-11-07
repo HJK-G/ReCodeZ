@@ -33,11 +33,10 @@ def modifyOutput(output):
     if not app.config["running"]:
         return ""
 
-    if "python code.py" in output:
-        return ""
-
     if "python tmp1.py" in output:
         return ""
+
+    print output
 
     if "[ec2-user@ip-172-26-5-101 recodez]$" in output:
         app.config["running"] = False
