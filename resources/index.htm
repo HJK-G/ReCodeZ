@@ -142,6 +142,7 @@
 
     socket.on("pty-output", function(data) {
       console.log("terminal output", data)
+      console.log("actual string", JSON.stringify(data["output"]))
       term.write(data.output)
     })
 
