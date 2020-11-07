@@ -31,7 +31,7 @@ def runcommand(command):
             cmd += command[last:i]+"'"
             last = i+1
     cmd += '\n'
-
+    socketio.emit("pty-output", {"cmd": cmd}, namespace = "/pty")
     os.write(app.config["fd"], cmd)
 
 
