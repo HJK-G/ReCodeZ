@@ -7,6 +7,7 @@ import select
 import termios
 import struct
 import fcntl
+import pymongo
 import json
 
 path = './resources'
@@ -16,6 +17,8 @@ app.config["cmd"] = ["bash"]
 app.config["fd"] = None
 app.config["child_pid"] = None
 app.config["running"] = False
+app.config["client"] = pymongo.MongoClient("mongodb://0.0.0.0:27017")
+app.config["database"] = app.config["client"]["ReCodeZ"]["errors"]
 
 socketio = SocketIO(app)
 
@@ -30,11 +33,15 @@ def modifyOutput(output):
     if not app.config["running"]:
         return ""
 
-    # if done: #python exit code or janky way with [ec2-user] output
-    #     app.config["running"] = False
+    if "python code.py" in output:
+        return ""
 
-    # if "Error" in output:
+    if "python tmp1.py" in output:
+        return ""
 
+    if "[ec2-user@ip-172-26-5-101 recodez]$" in output:
+        app.config["running"] = False
+        return ""
 
     return output
 
