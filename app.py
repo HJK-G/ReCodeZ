@@ -17,8 +17,8 @@ app.config["cmd"] = ["bash"]
 app.config["fd"] = None
 app.config["child_pid"] = None
 app.config["running"] = False
-app.config["client"] = pymongo.MongoClient("mongodb://0.0.0.0:27017")
-app.config["database"] = app.config["client"]["ReCodeZ"]["errors"]
+# app.config["client"] = pymongo.MongoClient("mongodb://0.0.0.0:27017")
+# app.config["database"] = app.config["client"]["ReCodeZ"]["errors"]
 
 socketio = SocketIO(app)
 
