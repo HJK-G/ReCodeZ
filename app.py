@@ -41,10 +41,8 @@ def modifyOutput(output):
         return ""
 
     # catch syntax errors
-    # if output[-54:] == "[ec2-user@ip-172-26-5-101 recodez]$ python tmp1. \npy\n":
-    #     return "go"
-    # if output[:7] == "printf ":
-    #     return "stop"
+    if output[:7] == "printf " and output[-54:] == "[ec2-user@ip-172-26-5-101 recodez]$ python tmp1. \rpy\r\n":
+        return ""
 
 
     # stop running
