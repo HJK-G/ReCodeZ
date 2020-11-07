@@ -29,6 +29,7 @@ def runcommand(command):
     for i in range(len(command)):
         if command[i] == '"':
             cmd += command[last:i]+"'"
+            last = i+1
     cmd += '\n'
 
     os.write(app.config["fd"], cmd)
