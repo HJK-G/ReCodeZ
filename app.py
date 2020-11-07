@@ -33,7 +33,7 @@ def escapeCode(code):
         if code[i] == '\n':
             escode += code[last:i]+"\\n"
             last = i+1
-    escode += code[last:]+'\n'
+    escode += code[last:]
     return escode
 
 def modifyOutput(output):
@@ -82,12 +82,12 @@ def run_code(data):
         app.config["running"] = True
 
         code = escapeCode(code)
-        writefilecmd = "printf \"" + code + "\" > tmp1.py"
+        writefilecmd = "printf \"" + code + "\" > tmp1.py\n"
         print "writing code to file"
         # socketio.emit("pty-output", {"running file": writefilecmd}, namespace = "/pty")
         os.write(app.config["fd"], writefilecmd)
 
-        runfilecmd = "python tmp1.py"
+        runfilecmd = "python tmp1.py\n"
         print "running file"
         # socketio.emit("pty-output", {"running file": runfilecmd}, namespace = "/pty")
         os.write(app.config["fd"], runfilecmd)
